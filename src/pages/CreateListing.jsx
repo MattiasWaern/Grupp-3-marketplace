@@ -1,4 +1,5 @@
 import { useState } from "react";
+import '../css/createListing.css';
 
 function createListing(){
     const [title, setTitle] = useState("");
@@ -32,9 +33,12 @@ function createListing(){
     };
 
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="form-container">
+
+        <h2 className="form-title">Skapa annons</h2>
 
         <input
+        className="input-field"
         type="text"
         placeholder="Titel"
         value={title}
@@ -42,12 +46,14 @@ function createListing(){
         />
 
         <textarea
+        className="input-field"
         placeholder="Beskrivning"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         />
 
         <input
+        className="input-field"
         type="number"
         placeholder="Pris"
         value={price}
@@ -55,6 +61,7 @@ function createListing(){
         />
 
         <input
+        className="input-field"
         type="text"
         placeholder="Plats"
         value={location}
@@ -62,12 +69,13 @@ function createListing(){
         />
 
         <input
+        className="input-field"
         type="date"
         value={published}
         onChange={(e) => setPublished(e.target.value)}
         />
 
-        <button type="submit">
+        <button className="button-submit" type="submit">
             Skapa annons
         </button>
       </form>  
