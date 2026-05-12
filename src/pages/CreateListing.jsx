@@ -1,6 +1,8 @@
 import { useState } from "react";
 import '../css/createListing.css';
 
+
+// Skapa en annons med titel, beskrivning, pris, plats och publicerignsdatum
 function createListing(){
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -9,6 +11,7 @@ function createListing(){
     const [published, setPublished] = useState("");
 
 
+    // Skicka data till backend
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -28,10 +31,13 @@ function createListing(){
             }),
         });
 
+        // Logga svaret från backend
         const data = await response.json();
         console.log(data);
     };
 
+
+    // Formulär för att skapa en annons
     return (
       <form onSubmit={handleSubmit} className="form-container">
 
