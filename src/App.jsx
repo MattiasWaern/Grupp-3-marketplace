@@ -1,12 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CreateListing from "./pages/CreateListing";
 
-
-function Home(){
-  return <h1>Home</h1>
-}
-
-
 function App(){
   return (
     <BrowserRouter>
