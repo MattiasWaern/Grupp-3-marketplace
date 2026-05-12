@@ -5,7 +5,7 @@ function createListing(){
     const [price, setPrice] = useState("");
 
     const handleSubmit = async (e) => {
-        e.preventDefaut();
+        e.preventDefault()
 
         const response = await fetch("http://localhost:1337/api/listings", {
             method: "POST",
@@ -18,7 +18,7 @@ function createListing(){
                     price,
                 },
             }),
-        }),
+        });
 
         const data = await response.json();
         console.log(data);
@@ -48,4 +48,4 @@ function createListing(){
     );
 }
 
-export default CreateListing;
+export default createListing;
