@@ -2,7 +2,11 @@ import { useState } from "react";
 
 function createListing(){
     const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
+    const [location, setLocation] = useState("");
+    const [published, setPublished] = useState("");
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -15,7 +19,10 @@ function createListing(){
             body:JSON.stringify({
                 data: {
                     title,
+                    description,
                     price,
+                    location,
+                    published,
                 },
             }),
         });
@@ -34,11 +41,30 @@ function createListing(){
         onChange={(e) => setTitle(e.target.value)}
         />
 
+        <textarea
+        placeholder="Beskrivning"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        />
+
         <input
         type="number"
         placeholder="Pris"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
+        />
+
+        <input
+        type="text"
+        placeholder="Plats"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        />
+
+        <input
+        type="date"
+        value={published}
+        onChange={(e) => setPublished(e.target.value)}
         />
 
         <button type="submit">
