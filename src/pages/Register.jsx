@@ -33,6 +33,24 @@ function Register() {
     // alt. handleChange?
 
     // formuläret för registeringen
+    return (
+        <form onSubmit={handleSubmit}>
+
+            <h2>Skapa konto</h2>
+
+            <input type="text" placeholder="Användarnamn" value={username} 
+            onChange={(e) => setUsername(e.target.value)} />
+
+            <input type="email" placeholder="email" value={email}
+            onChange={(e) => setEmail(e.target.value)} />
+
+            <input type="password" placeholder="Lösenord" value={password}
+            onChange={(e) => setPassword(e.target.value)} />
+
+            <button type="submit">Skapa konto</button>
+
+        </form>
+    )
 }
 
 export default Register;
