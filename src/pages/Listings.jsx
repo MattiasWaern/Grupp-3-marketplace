@@ -6,7 +6,7 @@ import '../css/Listings.css';
 function Listings(){
 
     // State
-    const [listngs, setListings] = useState([]);
+    const [listings, setListings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
@@ -45,8 +45,8 @@ function Listings(){
             <h1 className="listings-title">Alla annonser</h1>
 
             <div className="listings-grid">
-                {Listings.map((listng) => (
-                    <div className="listing-card" key={Listings.id}> 
+                {listings.map((listing) => (
+                    <div className="listing-card" key={listing.id}> 
                         <h2>{listing.title}</h2>
 
                         <p>{listing.description}</p>
