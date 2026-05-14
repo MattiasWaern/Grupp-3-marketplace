@@ -25,8 +25,39 @@ const categories = [
     { id: "electronics", name: "Elektronik", icon: "?", color: "#667eea"},
     { id: "clothes", name: "Kläder", icon: "?", color: "#667eea"},
     { id: "books", name: "Böcker", icon: "?", color: "#667eea"},
-
 ]
+
+
+const handleChange = (e) => {
+    const {name, value} = e.target;
+    setFormData(prev => ({
+        ...prev,
+        [name]: value
+    }));
+};
+
+const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if(file){
+        // Validera filtyp
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+
+        if(!allowedTypes.includes(file.type)){
+            setError("Endast JPG, PNG, WEBP är tillåtna");
+            return;
+        }
+
+        // Validera storlek
+        if(file.size > 5 * 1024*1024){
+            setError("Bilder får max vara 5MB");
+            return;
+        }
+
+        setImageFile(file);
+        setImagePreview(URL.createObjectURL(file));
+        setError("");
+    }
+};
 
 
     // Skicka data till backend
