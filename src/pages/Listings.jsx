@@ -60,9 +60,9 @@ function Listings(){
     // Hämta kategori ikon
     const getCategoryIcon = (category) => {
         const icons = {
-            electronics: "?",
-            clothes: "?",
-            books: "?"
+            Elektronik: "?",
+            Kläder: "?",
+            Böcker: "?"
         };
         return icons[category] || "??";
     }

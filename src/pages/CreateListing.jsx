@@ -22,15 +22,15 @@ function CreateListing() {
 
     // Kategorier
     const categories = [
-        { id: "electronics", name: "Elektronik", icon: "?", color: "#667eea"},
-        { id: "clothes",  name: "Kläder", icon: "?", color: "#667eea",
+        { id: "Elektronik", name: "Elektronik", icon: "?", color: "#667eea"},
+        { id: "Kläder",  name: "Kläder", icon: "?", color: "#667eea",
             subcategories: [
-            { id: "mens", name: "Herr", icon: "?" },
-            { id: "womens", name: "Dam", icon: "?" },
-            { id: "kids", name: "Barn", icon: "?" }
+            { id: "Herr", name: "Herr", icon: "?" },
+            { id: "Dam", name: "Dam", icon: "?" },
+            { id: "Barn", name: "Barn", icon: "?" }
         ]
     },
-        { id: "books", name: "Böcker", icon: "?", color: "#667eea"},
+        { id: "Böcker", name: "Böcker", icon: "?", color: "#667eea"},
     ]
 
     // Hantera formulärändringar
