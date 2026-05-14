@@ -59,6 +59,27 @@ const handleImageChange = (e) => {
     }
 };
 
+const uploadImageToStrapi = async (file) => {
+    const formData = new FormData();
+    formData.append("files", file);
+
+    try {
+        const response = await fetch("http://localhost:1337/api/upload", {
+            method: "POST",
+            headers: {
+                    // Lägg till token senare
+            },
+            body:formData
+        });
+
+        const data = await response.json();
+        return data[0].id; // Returnera bildens ID i strapi
+    } catch (error){
+        console.log("Strapi upload failed", error);
+        return null;
+    }
+}
+
 
     // Skicka data till backend
     const handleSubmit = async (e) => {
