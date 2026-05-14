@@ -616,14 +616,12 @@ export interface ApiListingListing extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    category: Schema.Attribute.String & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
-    image: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    >;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -634,6 +632,7 @@ export interface ApiListingListing extends Struct.CollectionTypeSchema {
     price: Schema.Attribute.Integer;
     published: Schema.Attribute.Date;
     publishedAt: Schema.Attribute.DateTime;
+    subcategory: Schema.Attribute.String & Schema.Attribute.Required;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
