@@ -1,0 +1,165 @@
+.listings-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.listings-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.listings-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 2px;
+}
+
+.listings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.8rem;
+    margin-top: 2rem;
+}
+
+/* Annonskort */
+.listing-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.listing-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* Kategori-badge */
+.category-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* Bild */
+.listing-image-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: #f7fafc;
+}
+
+.listing-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.listing-card:hover .listing-image {
+    transform: scale(1.05);
+}
+
+/* Titel */
+.listing-card h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 1rem 1rem 0.5rem 1rem;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Beskrivning */
+.listing-description {
+    color: #4a5568;
+    line-height: 1.5;
+    margin: 0 1rem 1rem 1rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.9rem;
+}
+
+/* Detaljer */
+.listing-details {
+    margin: 0 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.listing-price {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #667eea;
+    margin: 0.5rem 0; 
+}
+
+.listing-location {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #718096;
+    font-size: 0.85rem;
+    margin: 0.3rem 0;
+}
+
+.listing-subcategory {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #a0aec0;
+    font-size: 0.8rem;
+    margin: 0.3rem 0;
+}
+
+.listing-date {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #a0aec0;
+    font-size: 0.75rem;
+    margin: 0.8rem 1rem 1rem 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #edf2f7;
+}
+
+/* Loading och error */
+.loading-text, .error-text, .no-listings {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 3rem;
+    color: #718096;
+}
+
+.error-text {
+    color: #e53e3e;
+}
