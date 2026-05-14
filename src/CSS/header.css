@@ -1,42 +1,54 @@
 header {
   position: fixed;
-  z-index: 1;
-  width: 100vw;
+  top: 0;
+  width: 100%;
+  background: white;
+  z-index: 1000;
+  color: #0B7D5F;
+  font-family: Arial, Helvetica, sans-serif;
 
-  background-color: white;
-  padding: 40px 20px 20px;
-
-  h1 {
-    margin: 0;
-    color: #0B7D5F;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-
-  nav {
-    display: flow-root;
-
-    padding-top: 20px;
-
-    a{
-      float: left;
-      display: block;
-      padding: 0 10px;
-      color: #0B7D5F;
-      text-decoration: none;
-    
-    }
-
-    a:first-child {
-      padding-left: 0;
-    }
-
-    a:last-child {
-      padding-right: 0;
-    }
-
-    a.active {
-      color: #0B7D5F;
-    }
-  }
-
+  display: flex;
+  flex-direction: column;
 }
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+}
+
+.topRow h1 {
+  margin: 0;
+}
+
+.searchBar {
+  flex: 1;
+  max-width: 400px;
+  margin: 0 20px;
+}
+
+.navLinks {
+  display: flex;
+  gap: 15px;
+}
+
+.divider {
+  height: 1px;
+  background: #e0e0e0;
+  width: 100%;
+}
+
+.categoryLinks {
+  display: flex;
+  gap: 20px;
+  padding: 10px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.navLinks a,
+.categoryLinks a {
+  text-decoration: none;
+  color: #0B7D5F;
+}
+

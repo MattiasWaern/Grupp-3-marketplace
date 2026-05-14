@@ -1,5 +1,17 @@
+import Header from "./partials/Header";
+import Footer from "./partials/Footer";
+import { Outlet } from "react-router-dom";
+
 function App() {
-  return <h1>Hello</h1>;
+  return (
+    <>
+      <Header />
+      <main>
+        <Outlet/>
+      </main>
+      <Footer />
+    </>
+  );
 }
 
 export default App;
