@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.listing-container{
+.listings-container{
     padding: 40px;
 }
 
@@ -12,13 +12,13 @@ body {
     margin-bottom: 30px;
 }
 
-.listings-grid{
+.listings-grids{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
 
-.listings-card{
+.listings-cards{
     background: white;
     padding: 20px;
     border-radius: 12px;
@@ -26,21 +26,21 @@ body {
     transition: 0.2s;
 }
 
-.listings-card:hover{
+.listings-cards:hover{
     transform: translateY(-5px);
 }
 
-.listing-price{
+.listings-price{
     font-size: 20px;
     font-weight: bold;
     color: #007bff;
 }
 
-.listing-location{
+.listings-location{
     color: gray;
 }
 
-.listing-date{
+.listings-date{
     font-size: 14px;
     color: #888;
 }

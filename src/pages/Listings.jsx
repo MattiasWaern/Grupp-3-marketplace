@@ -46,16 +46,17 @@ function Listings(){
 
             <div className="listings-grid">
                 {listings.map((listing) => (
-                    <div className="listing-card" key={listing.id}> 
+                    <div className="listings-card" key={listing.id}> 
                         <h2>{listing.title}</h2>
 
                         <p>{listing.description}</p>
 
-                        <p className="listing-price"> {listing.price} kr</p>
+                        <p className="listings-price"> {listing.price} kr</p>
 
-                        <p className="listing-location"> {listing.location} </p>
+                        <p className="listings-location"> {listing.location} </p>
 
-                        <p className="listing-date"> {listing.published} </p>
+                        <p className="listings-date"> {listing.published} </p>
+
                     </div>
                 ))}
             </div>
