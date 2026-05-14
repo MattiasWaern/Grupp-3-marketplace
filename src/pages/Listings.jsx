@@ -57,15 +57,32 @@ function Listings(){
         });
     };
 
-    //
+    // Hämta kategori ikon
+    const getCategoryIcon = (category) => {
+        const icons = {
+            electronics: "?",
+            clothes: "?",
+            books: "?"
+        };
+        return icons[category] || "??";
+    }
 
 
     if(loading){
-        return <p>Laddar annonser...</p>
+        return <p className="loading-text">Laddar annonser...</p>
     }
 
     if(error){
-        return <p>{error}</p>
+        return <p className="error-text">{error}</p>
+    }
+
+    if(listings.length === 0 ){
+        return (
+            <div className="listings-container">
+                <h1 className="listings-title">Alla annonser</h1>
+                <p className="no-listings">Inga annonser hittades, var den första att skapa en lol</p>
+            </div>
+        );
     }
 
     return(
