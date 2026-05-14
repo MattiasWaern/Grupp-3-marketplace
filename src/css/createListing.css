@@ -1,0 +1,52 @@
+/* VI FÅR ÄNDRA FÄRGSCHEMA O SÅNT SENARE ALLT ÄR BARA PLACEHOLDER */
+
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 420px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+}
+
+.form-title{
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.input-field{
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+}
+
+.input-field:focus{
+    border-color: #007bff;
+}
+
+.textarea-field{
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    resize: none;
+}
+
+.button-submit{
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.button-submit:hover{
+    background: #0056b3;
+}
