@@ -19,6 +19,15 @@ const [error, setError] = useState("");
 const [succes, setSucces] = useState("");
 const [uploadProgress, setUploadProgress] = useState(0);
 
+//Kategorier
+
+const categories = [
+    { id: "electronics", name: "Elektronik", icon: "?", color: "#667eea"},
+    { id: "clothes", name: "Kläder", icon: "?", color: "#667eea"},
+    { id: "books", name: "Böcker", icon: "?", color: "#667eea"},
+
+]
+
 
     // Skicka data till backend
     const handleSubmit = async (e) => {
