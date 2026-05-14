@@ -171,52 +171,141 @@ const uploadImageToStrapi = async (file) => {
 
     // Formulär för att skapa en annons
     return (
-      <form onSubmit={handleSubmit} className="form-container">
-
-        <h2 className="form-title">Skapa annons</h2>
-
-        <input
-        className="input-field"
-        type="text"
-        placeholder="Titel"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        />
-
-        <textarea
-        className="input-field"
-        placeholder="Beskrivning"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        />
-
-        <input
-        className="input-field"
-        type="number"
-        placeholder="Pris"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-        />
-
-        <input
-        className="input-field"
-        type="text"
-        placeholder="Plats"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
-        />
-
-        <input
-        className="input-field"
-        type="date"
-        value={published}
-        onChange={(e) => setPublished(e.target.value)}
-        />
-
-        <button className="button-submit" type="submit">
-            Skapa annons
-        </button>
-      </form>  
+        <div className="create-listing-container">
+            <h1>Skapa ny annons</h1>
+            
+            {error && <div className="error-message">{error}</div>}
+            {success && <div className="success-message">{success}</div>}
+            
+            {uploadProgress > 0 && uploadProgress < 100 && (
+                <div className="progress-bar">
+                    <div className="progress-fill" style={{ width: `${uploadProgress}%` }}>
+                        {uploadProgress}%
+                    </div>
+                </div>
+            )}
+            
+            <form onSubmit={handleSubmit}>
+                {/* Titel */}
+                <div className="form-group">
+                    <label>Titel *</label>
+                    <input
+                        type="text"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleChange}
+                        placeholder="Ange en tydlig titel"
+                        required
+                    />
+                </div>
+                
+                {/* Kategori */}
+                <div className="form-group">
+                    <label>Kategori *</label>
+                    <div className="category-grid">
+                        {categories.map(category => (
+                            <button
+                                key={category.id}
+                                type="button"
+                                className={`category-btn ${formData.category === category.id ? 'active' : ''}`}
+                                style={{
+                                    borderColor: formData.category === category.id ? category.color : '#e2e8f0',
+                                    backgroundColor: formData.category === category.id ? `${category.color}10` : 'white'
+                                }}
+                                onClick={() => setFormData(prev => ({ ...prev, category: category.id }))}
+                            >
+                                <span className="category-icon">{category.icon}</span>
+                                <span className="category-name">{category.name}</span>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+                
+                {/* Bilduppladdning */}
+                <div className="form-group">
+                    <label>Bilder</label>
+                    <div className="image-upload-area">
+                        <input
+                            type="file"
+                            id="image-upload"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            style={{ display: 'none' }}
+                        />
+                        <button
+                            type="button"
+                            className="upload-btn"
+                            onClick={() => document.getElementById('image-upload').click()}
+                        >
+                            Välj bild
+                        </button>
+                        
+                        {imagePreview && (
+                            <div className="image-preview">
+                                <img src={imagePreview} alt="Preview" />
+                                <button
+                                    type="button"
+                                    className="remove-image"
+                                    onClick={() => {
+                                        setImageFile(null);
+                                        setImagePreview(null);
+                                    }}
+                                >
+                                    ✕
+                                </button>
+                            </div>
+                        )}
+                        
+                        <p className="upload-hint">Max 5MB. JPG, PNG eller WEBP</p>
+                    </div>
+                </div>
+                
+                {/* Beskrivning */}
+                <div className="form-group">
+                    <label>Beskrivning</label>
+                    <textarea
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        rows="5"
+                        placeholder="Beskriv din annons..."
+                    />
+                </div>
+                
+                {/* Pris och plats */}
+                <div className="form-row">
+                    <div className="form-group">
+                        <label>Pris *</label>
+                        <div className="price-input">
+                            <input
+                                type="number"
+                                name="price"
+                                value={formData.price}
+                                onChange={handleChange}
+                                placeholder="0"
+                                required
+                            />
+                            <span className="price-currency">kr</span>
+                        </div>
+                    </div>
+                    
+                    <div className="form-group">
+                        <label>Plats</label>
+                        <input
+                            type="text"
+                            name="location"
+                            value={formData.location}
+                            onChange={handleChange}
+                            placeholder="T.ex. Stockholm, Göteborg..."
+                        />
+                    </div>
+                </div>
+                
+                <button type="submit" disabled={loading} className="submit-btn">
+                    {loading ? "Skapar annons..." : "Skapa annons"}
+                </button>
+            </form>
+        </div>
     );
   }
 }
