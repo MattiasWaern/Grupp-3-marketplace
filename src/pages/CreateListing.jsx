@@ -15,13 +15,21 @@ function CreateListing() {
     const [imagePreview, setImagePreview] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");  // ← Rättstavat!
+    const [success, setSuccess] = useState("");  
     const [uploadProgress, setUploadProgress] = useState(0);
+    const [selectedSubcategory, setSelectedSubcategory] = useState("");
 
     // Kategorier
     const categories = [
         { id: "electronics", name: "Elektronik", icon: "?", color: "#667eea"},
-        { id: "clothes", name: "Kläder", icon: "?", color: "#667eea"},
+        { id: "clothes",  name: "Kläder", icon: "?", color: "#667eea",
+            subcategories: [
+            { id: "mens", name: "Herr", icon: "?" },
+            { id: "womens", name: "Dam", icon: "?" },
+            { id: "kids", name: "Barn", icon: "?" },
+            { id: "baby", name: "Baby", icon: "?" }
+        ]
+    },
         { id: "books", name: "Böcker", icon: "?", color: "#667eea"},
     ]
 
@@ -108,6 +116,7 @@ function CreateListing() {
                     price: parseInt(formData.price),
                     location: formData.location,
                     category: formData.category,
+                    subcategory: selectedSubcategory,
                     publishedAt: new Date().toISOString(), 
                     ...(imageId && { image: imageId })
                 }
@@ -197,7 +206,10 @@ function CreateListing() {
                                     borderColor: formData.category === category.id ? category.color : '#e2e8f0',
                                     backgroundColor: formData.category === category.id ? `${category.color}10` : 'white'
                                 }}
-                                onClick={() => setFormData(prev => ({ ...prev, category: category.id }))}
+                                onClick={() => {
+                                    setFormData(prev => ({ ...prev, category: category.id }));
+                                    setSelectedSubcategory(""); // Återställ underkategori
+                                }}
                             >
                                 <span className="category-icon">{category.icon}</span>
                                 <span className="category-name">{category.name}</span>
@@ -205,6 +217,28 @@ function CreateListing() {
                         ))}
                     </div>
                 </div>
+
+                {/* Underkategori visas bara om huvudkategori har subkategorier */}
+                {formData.category && categories.find(c => c.id === formData.category)?.subcategories && (
+                    <div className="form-group">
+                        <label>Underkategori</label>
+                        <div className="subcategory-grid">
+                            {categories
+                                .find(c => c.id === formData.category)
+                                ?.subcategories.map(sub => (
+                                    <button
+                                        key={sub.id}
+                                        type="button"
+                                        className={`subcategory-btn ${selectedSubcategory === sub.id ? 'active' : ''}`}
+                                        onClick={() => setSelectedSubcategory(sub.id)}
+                                    >
+                                        <span>{sub.icon}</span>
+                                        <span>{sub.name}</span>
+                                    </button>
+                                ))}
+                        </div>
+                    </div>
+                )}
                 
                 <div className="form-group">
                     <label>Bilder</label>
