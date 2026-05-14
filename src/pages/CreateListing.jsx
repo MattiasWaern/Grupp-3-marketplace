@@ -4,11 +4,20 @@ import '../css/createListing.css';
 
 // Skapa en annons med titel, beskrivning, pris, plats och publicerignsdatum
 function createListing(){
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState("");
-    const [location, setLocation] = useState("");
-    const [published, setPublished] = useState("");
+    const [formData, setFormData] = useState({
+        title: "",
+        description: "",
+        price: "",
+        location: "",
+        category: "",
+    })
+
+const [imageFile, setImageFile] = useState(null);
+const [imagePreview, setImagePreview] = useState(null);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState("");
+const [succes, setSucces] = useState("");
+const [uploadProgress, setUploadProgress] = useState(0);
 
 
     // Skicka data till backend
