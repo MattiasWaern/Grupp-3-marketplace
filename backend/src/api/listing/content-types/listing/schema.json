@@ -22,7 +22,7 @@
     },
     "image": {
       "type": "media",
-      "multiple": true,
+      "multiple": false,
       "allowedTypes": [
         "images",
         "files",
@@ -35,6 +35,10 @@
     },
     "published": {
       "type": "date"
+    },
+    "category": {
+      "type": "string",
+      "required": true
     }
   }
 }
