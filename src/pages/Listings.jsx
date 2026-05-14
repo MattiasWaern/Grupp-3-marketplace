@@ -85,28 +85,70 @@ function Listings(){
         );
     }
 
-    return(
+    return (
         <div className="listings-container">
             <h1 className="listings-title">Alla annonser</h1>
 
             <div className="listings-grid">
-                {listings.map((listing) => (
-                    <div className="listings-card" key={listing.id}> 
-                        <h2>{listing.title}</h2>
-
-                        <p>{listing.description}</p>
-
-                        <p className="listings-price"> {listing.price} kr</p>
-
-                        <p className="listings-location"> {listing.location} </p>
-
-                        <p className="listings-date"> {listing.published} </p>
-
-                    </div>
-                ))}
+                {listings.map((listing) => {
+                    // Hämta attribut från Strapis struktur
+                    const attrs = listing.attributes || listing;
+                    
+                    return (
+                        <div className="listing-card" key={listing.id}>
+                            {/* Kategori-badge */}
+                            {attrs.category && (
+                                <div className="category-badge">
+                                    <span>{getCategoryIcon(attrs.category)}</span>
+                                    <span>{attrs.category}</span>
+                                </div>
+                            )}
+                            
+                            {/* Bild om den finns */}
+                            {attrs.image?.data?.attributes?.url && (
+                                <div className="listing-image-container">
+                                    <img 
+                                        src={`http://localhost:1337${attrs.image.data.attributes.url}`}
+                                        alt={attrs.title}
+                                        className="listing-image"
+                                    />
+                                </div>
+                            )}
+                            
+                            {/* Innehåll */}
+                            <h2>{attrs.title || "Utan titel"}</h2>
+                            
+                            <p className="listing-description">
+                                {attrs.description || "Ingen beskrivning"}
+                            </p>
+                            
+                            <div className="listing-details">
+                                <p className="listing-price">
+                                    {attrs.price ? `${attrs.price.toLocaleString()} kr` : "Pris saknas"}
+                                </p>
+                                
+                                {attrs.location && (
+                                    <p className="listing-location">
+                                         {attrs.location}
+                                    </p>
+                                )}
+                                
+                                {attrs.subcategory && (
+                                    <p className="listing-subcategory">
+                                         {attrs.subcategory}
+                                    </p>
+                                )}
+                            </div>
+                            
+                            <p className="listing-date">
+                                 {formatDate(attrs.publishedAt || attrs.createdAt)}
+                            </p>
+                        </div>
+                    );
+                })}
             </div>
         </div>
-    )
+    );
 }
 
 
