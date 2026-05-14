@@ -102,7 +102,7 @@ const uploadImageToStrapi = async (file) => {
             let imageId = null;
 
             // Ladda upp bild om det finns
-            i(imageFile){
+            if (imageFile){
                 setUploadProgress(30);
                 imageId = await uploadImageToStrapi(imageFile);
                 setUploadProgress(70);
@@ -130,12 +130,42 @@ const uploadImageToStrapi = async (file) => {
             },
             body:JSON.stringify(listingData)
         });
+
+        if(!response.ok){
+            throw new error(`HTTP ${response.status}`);
+        }
+
+
+        setUploadProgress(100);
+        setSucces("Annons skapad");
+
+        //Återställ formuläret
+        setFormData({
+            title: "",
+            description: "",
+            price: "",
+            location: "",
+            category: ""
+        });
+        setImageFile(null);
+        setImagePreview(null);
+
+        setTimeout(() => {
+            setSucces("");
+            setUploadProgress(0);
+        }, 3000)
+
+    } catch (err){
+        console.error("Error creating listing", error);
+        setError(err.message);
+
+    } finally {
+        setLoading(false)
     }
 
-
-        // Logga svaret från backend
-        const data = await response.json();
-        console.log(data);
+    const getCategoryIcon = (categoryId) => {
+        const category = categories.find(c => c.id === categoryId);
+        return category ? category.icon: ""
     };
 
 
@@ -188,6 +218,6 @@ const uploadImageToStrapi = async (file) => {
         </button>
       </form>  
     );
+  }
 }
-
 export default createListing;
