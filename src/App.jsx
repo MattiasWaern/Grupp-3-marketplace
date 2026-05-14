@@ -1,5 +1,15 @@
-function App() {
-  return <h1>Hello</h1>;
-}
+import { useState } from 'react';
+import { Outlet } from 'react-router';
+import Header from "./partials/Header";
+import Footer from "./partials/Footer";
 
-export default App;
+export default function App() {
+
+  const [user, setUser] = useState(localStorage.user ? JSON.parse(localStorage.user) : null);
+
+  return <>
+    <Header user={user} setUser={setUser} />
+    <main><Outlet context={{ user, setUser }} /></main>
+    <Footer />
+  </>;
+}

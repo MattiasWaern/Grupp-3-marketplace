@@ -53,4 +53,9 @@ function Register() {
     )
 }
 
+Register.route = {
+    path: '/register',
+    index: 2,
+};
+
 export default Register;
