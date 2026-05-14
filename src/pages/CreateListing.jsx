@@ -67,9 +67,10 @@ const uploadImageToStrapi = async (file) => {
         const response = await fetch("http://localhost:1337/api/upload", {
             method: "POST",
             headers: {
-                    // Lägg till token senare
+                   "Content-Type": "application/json",
+                   'Authorization': `fd25e7f558c2ed1ad11eaeb9b25c13325f790864900fe14c08b0130e2fd9cf72af630d1651b8200e83bd0494144aa2081da5ecaab2deb635acaa191cccc795f24cf7b1529371e6e315bb32308906e729d5984dd3da82cbe6300d53454419905046034284f85ec859ad430136c845ed528d614c820219f2de7c5b956601b21af9`
             },
-            body:formData
+            body: JSON.stringify({ data: formData})
         });
 
         const data = await response.json();
