@@ -1,37 +1,33 @@
 import { useEffect, useState } from "react";
 import '../css/Listings.css';
 
-
 // Hämtar alla annonser från backend och visar dom
-function Listings(){
-
+function Listings() {
     // State
     const [listings, setListings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
-
     useEffect(() => {
         fetchListings();
     }, []);
 
-// Funktion för att hämta annonser från backend
+    // Funktion för att hämta annonser från backend
     const fetchListings = async () => {
         try {
-            const response = await fetch (
+            const response = await fetch(
                 "http://localhost:1337/api/listings?populate=*"
             );
 
-            if(!response.ok){
+            if (!response.ok) {
                 throw new Error(`HTTP ${response.status}`);
             }
             const data = await response.json();
-            console.log("Hämtade annonser")
-
+            console.log("Hämtade annonser:", data);
 
             // Strapi lägger data i data.data arrayen
-            setListings(data.data);
-        } catch (err){
+            setListings(data.data || []);
+        } catch (err) {
             console.error(err);
             setError("Kunde inte hämta annonser");
         } finally {
@@ -39,16 +35,9 @@ function Listings(){
         }
     };
 
-
-    const getListingValue = (listing, field) => {
-        if (listing.attributes){
-            return listing.attributes[field] || "Inte angivet"
-        }
-    };
-
     // Formatera datum
-    const formatDate = (dateString) => {    
-        if(!dateString) return "Inget datum";
+    const formatDate = (dateString) => {
+        if (!dateString) return "Inget datum";
         const date = new Date(dateString);
         return date.toLocaleDateString('sv-SE', {
             year: 'numeric',
@@ -57,30 +46,48 @@ function Listings(){
         });
     };
 
-    // Hämta kategori ikon
+    // Hämta kategori ikon med riktiga emojis
     const getCategoryIcon = (category) => {
         const icons = {
             Elektronik: "?",
             Kläder: "?",
             Böcker: "?"
         };
-        return icons[category] || "??";
+        return icons[category] || "?";
+    };
+
+    // Hjälpfunktion för att hämta bild-URL från Strapis komplexa struktur
+    const getImageUrl = (image) => {
+        if (!image) return null;
+        
+        // För Strapi v4+ med populera
+        if (image.data?.attributes?.url) {
+            return `http://localhost:1337${image.data.attributes.url}`;
+        }
+        // För direkt URL
+        if (image.url) {
+            return `http://localhost:1337${image.url}`;
+        }
+        // För äldre versioner
+        if (image.data && typeof image.data === 'string') {
+            return `http://localhost:1337${image.data}`;
+        }
+        return null;
+    };
+
+    if (loading) {
+        return <p className="loading-text">Laddar annonser...</p>;
     }
 
-
-    if(loading){
-        return <p className="loading-text">Laddar annonser...</p>
+    if (error) {
+        return <p className="error-text">{error}</p>;
     }
 
-    if(error){
-        return <p className="error-text">{error}</p>
-    }
-
-    if(listings.length === 0 ){
+    if (listings.length === 0) {
         return (
             <div className="listings-container">
                 <h1 className="listings-title">Alla annonser</h1>
-                <p className="no-listings">Inga annonser hittades, var den första att skapa en lol</p>
+                <p className="no-listings">Inga annonser hittades. Var den första att skapa en annons!</p>
             </div>
         );
     }
@@ -93,6 +100,7 @@ function Listings(){
                 {listings.map((listing) => {
                     // Hämta attribut från Strapis struktur
                     const attrs = listing.attributes || listing;
+                    const imageUrl = getImageUrl(attrs.image);
                     
                     return (
                         <div className="listing-card" key={listing.id}>
@@ -105,12 +113,16 @@ function Listings(){
                             )}
                             
                             {/* Bild om den finns */}
-                            {attrs.image?.data?.attributes?.url && (
+                            {imageUrl && (
                                 <div className="listing-image-container">
                                     <img 
-                                        src={`http://localhost:1337${attrs.image.data.attributes.url}`}
-                                        alt={attrs.title}
+                                        src={imageUrl}
+                                        alt={attrs.title || "Annonsbild"}
                                         className="listing-image"
+                                        onError={(e) => {
+                                            e.target.style.display = 'none';
+                                            console.error("Bild kunde inte laddas:", imageUrl);
+                                        }}
                                     />
                                 </div>
                             )}
@@ -150,6 +162,5 @@ function Listings(){
         </div>
     );
 }
-
 
 export default Listings;
