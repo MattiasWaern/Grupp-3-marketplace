@@ -1,5 +1,6 @@
 import { useState } from "react";
 import '../css/createListing.css';
+import { list } from "postcss";
 
 
 // Skapa en annons med titel, beskrivning, pris, plats och publicerignsdatum
@@ -85,22 +86,52 @@ const uploadImageToStrapi = async (file) => {
     // Skicka data till backend
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true);
+        setError("");
+        setSucces("");
+        setUploadProgress(0);
 
-        const response = await fetch("http://localhost:1337/api/listings", {
+        //Validering
+        if(!formData.title || !formData.price || !formData.category){
+            setError("Titel, pris och kategori måste fyllas i");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            let imageId = null;
+
+            // Ladda upp bild om det finns
+            i(imageFile){
+                setUploadProgress(30);
+                imageId = await uploadImageToStrapi(imageFile);
+                setUploadProgress(70);
+            }
+
+
+            //Skapa annonsen
+            const listingData = {
+                data:{
+                    title: formData.title,
+                    description: formData.description,
+                    price: parseInt(formData.price),
+                    location: formData.location,
+                    category: formData.category,
+                    publishedAt: new Date().toISOString(),
+                    ...arguments(imageId && {image: imageId})
+                }
+            };
+
+            const response = await fetch("http://localhost:1337/api/listings", {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
+                "Authorization": ``
             },
-            body:JSON.stringify({
-                data: {
-                    title,
-                    description,
-                    price,
-                    location,
-                    published,
-                },
-            }),
+            body:JSON.stringify(listingData)
         });
+    }
+
 
         // Logga svaret från backend
         const data = await response.json();
