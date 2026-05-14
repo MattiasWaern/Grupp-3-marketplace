@@ -21,8 +21,15 @@ function Listings(){
             const response = await fetch (
                 "http://localhost:1337/api/listings?populate=*"
             );
-            const data = await response.json();
 
+            if(!response.ok){
+                throw new Error(`HTTP ${response.status}`);
+            }
+            const data = await response.json();
+            console.log("Hämtade annonser")
+
+
+            // Strapi lägger data i data.data arrayen
             setListings(data.data);
         } catch (err){
             console.error(err);
@@ -31,6 +38,27 @@ function Listings(){
             setLoading(false);
         }
     };
+
+
+    const getListingValue = (listing, field) => {
+        if (listing.attributes){
+            return listing.attributes[field] || "Inte angivet"
+        }
+    };
+
+    // Formatera datum
+    const formatDate = (dateString) => {    
+        if(!dateString) return "Inget datum";
+        const date = new Date(dateString);
+        return date.toLocaleDateString('sv-SE', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
+
+    //
+
 
     if(loading){
         return <p>Laddar annonser...</p>
