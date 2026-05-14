@@ -1,0 +1,42 @@
+header {
+  position: fixed;
+  z-index: 1;
+  width: 100vw;
+
+  background-color: white;
+  padding: 40px 20px 20px;
+
+  h1 {
+    margin: 0;
+    color: #0B7D5F;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  nav {
+    display: flow-root;
+
+    padding-top: 20px;
+
+    a{
+      float: left;
+      display: block;
+      padding: 0 10px;
+      color: #0B7D5F;
+      text-decoration: none;
+    
+    }
+
+    a:first-child {
+      padding-left: 0;
+    }
+
+    a:last-child {
+      padding-right: 0;
+    }
+
+    a.active {
+      color: #0B7D5F;
+    }
+  }
+
+}
