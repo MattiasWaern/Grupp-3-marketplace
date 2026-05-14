@@ -39,4 +39,29 @@ function Listings(){
     if(error){
         return <p>{error}</p>
     }
+
+    return(
+        <div className="listings-container">
+            <h1 className="listings-title">Alla annonser</h1>
+
+            <div className="listings-grid">
+                {Listings.map((listng) => (
+                    <div className="listing-card" key={Listings.id}> 
+                        <h2>{listing.title}</h2>
+
+                        <p>{listing.description}</p>
+
+                        <p className="listing-price"> {listing.price} kr</p>
+
+                        <p className="listing-location"> {listing.location} </p>
+
+                        <p className="listing-date"> {listing.published} </p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
 }
+
+
+export default Listings;
