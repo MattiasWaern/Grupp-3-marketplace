@@ -27,8 +27,7 @@ function CreateListing() {
             subcategories: [
             { id: "mens", name: "Herr", icon: "?" },
             { id: "womens", name: "Dam", icon: "?" },
-            { id: "kids", name: "Barn", icon: "?" },
-            { id: "baby", name: "Baby", icon: "?" }
+            { id: "kids", name: "Barn", icon: "?" }
         ]
     },
         { id: "books", name: "Böcker", icon: "?", color: "#667eea"},
