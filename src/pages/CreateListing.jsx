@@ -20,9 +20,9 @@ function CreateListing() {
 
     // Kategorier
     const categories = [
-        { id: "electronics", name: "Elektronik", icon: "📱", color: "#667eea"},
-        { id: "clothes", name: "Kläder", icon: "👕", color: "#667eea"},
-        { id: "books", name: "Böcker", icon: "📚", color: "#667eea"},
+        { id: "electronics", name: "Elektronik", icon: "?", color: "#667eea"},
+        { id: "clothes", name: "Kläder", icon: "?", color: "#667eea"},
+        { id: "books", name: "Böcker", icon: "?", color: "#667eea"},
     ]
 
     const handleChange = (e) => {
