@@ -1,6 +1,7 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Header from "./partials/Header";
 import Footer from "./partials/Footer";
+import Start from "./pages/Start"
 import CreateListing from "./pages/CreateListing";
 import Listings from "./pages/Listings";
 
@@ -9,15 +10,20 @@ function Home(){
 }
 
 function App(){
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/"element={<Home/> } />
-        <Route path="/create"element={<CreateListing/> } />
-        <Route path="/listings" element={<Listings />} />
-      </Routes>
-    </BrowserRouter>
-  )
+  return <> 
+
+    <Header />
+
+    <Routes>
+      <Route path="/"element={<Start/> } />
+      <Route path="/create"element={<CreateListing/> } />
+      <Route path="/listings" element={<Listings />} />  
+    </Routes>
+    <main></main>
+    
+    <Footer />
+    </>
+
 }
 
 export default App;
