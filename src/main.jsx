@@ -6,6 +6,7 @@ import App from "./App.jsx";
 import "./CSS/_index.css";
 import Start from "./pages/Start.jsx";
 import CreateListing from "./pages/CreateListing.jsx";
+import Listings from "./pages/Listings.jsx";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "create",
         element: <CreateListing/>,
+      },
+      {
+        path: "listings",
+        element: <Listings/>,
       }
     ],
   },
