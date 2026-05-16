@@ -7,6 +7,8 @@ function Listings() {
     const [listings, setListings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [sortBy, setSortBy] = useState("createdAt:desc");
+    const [selectedCategory, setSelectedCategory] = useState("");
 
     useEffect(() => {
         fetchListings();
