@@ -1,17 +1,23 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./partials/Header";
 import Footer from "./partials/Footer";
-import { Outlet } from "react-router-dom";
+import CreateListing from "./pages/CreateListing";
+import Listings from "./pages/Listings";
 
-function App() {
+function Home(){
+  return <h1>Home</h1>
+}
+
+function App(){
   return (
-    <>
-      <Header />
-      <main>
-        <Outlet/>
-      </main>
-      <Footer />
-    </>
-  );
+    <BrowserRouter>
+      <Routes>
+        <Route path="/"element={<Home/> } />
+        <Route path="/create"element={<CreateListing/> } />
+        <Route path="/listings" element={<Listings />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App;
