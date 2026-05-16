@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./partials/Header";
+import Footer from "./partials/Footer";
 import CreateListing from "./pages/CreateListing";
 import Listings from "./pages/Listings";
 
