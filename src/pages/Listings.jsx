@@ -12,14 +12,21 @@ function Listings() {
 
     useEffect(() => {
         fetchListings();
-    }, []);
+    }, [sortBy, selectedCategory]);
 
     // Funktion för att hämta annonser från backend
     const fetchListings = async () => {
+        setLoading(true);
         try {
-            const response = await fetch(
-                "http://localhost:1337/api/listings?populate=*"
-            );
+
+           let url = `http://localhost:1337/api/listings?populate=*&sort=${sortBy}`;
+
+            if(selectedCategory){
+                url += `&filters[category][$eq]=${selectedCategory}`;
+            }
+
+            const response = await fetch(url);
+
 
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}`);
@@ -29,6 +36,7 @@ function Listings() {
 
             // Strapi lägger data i data.data arrayen
             setListings(data.data || []);
+            setError("")
         } catch (err) {
             console.error(err);
             setError("Kunde inte hämta annonser");
