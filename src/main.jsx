@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
 import "./CSS/_index.css";
 import Start from "./pages/Start.jsx";
+import CreateListing from "./pages/CreateListing.jsx";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Start/>,
       },
+      {
+        path: "create",
+        element: <CreateListing/>,
+      }
     ],
   },
 ]);
