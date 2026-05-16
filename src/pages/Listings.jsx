@@ -104,7 +104,38 @@ function Listings() {
 
     return (
         <div className="listings-container">
-            <h1 className="listings-title">Alla annonser</h1>
+          <h1 className="listings-title">Alla annonser</h1>
+
+            <div className="filter-sort-controls">
+                <div className="control-group">
+                    <label htmlFor="category-select">Kategori:</label>
+                    <select 
+                        id="category-select" 
+                        value={selectedCategory} 
+                        onChange={(e) => setSelectedCategory(e.target.value)}
+                    >
+                        <option value="">Alla kategorier</option>
+                        <option value="Elektronik">Elektronik</option>
+                        <option value="Kläder">Kläder</option>
+                        <option value="Böcker">Böcker</option>
+                    </select>
+                </div>
+
+                <div className="control-group">
+                    <label htmlFor="sort-select">Sortera efter:</label>
+                    <select 
+                        id="sort-select" 
+                        value={sortBy} 
+                        onChange={(e) => setSortBy(e.target.value)}
+                    >
+                        <option value="publishedAt:desc">Datum: Nyast först</option>
+                        <option value="publishedAt:asc">Datum: Äldst först</option>
+                        <option value="price:asc">Pris: Lägst till högst</option>
+                        <option value="price:desc">Pris: Högst till lägst</option>
+                        <option value="title:asc">A-Ö</option>
+                    </select>
+                </div>
+            </div>
 
             <div className="listings-grid">
                 {listings.map((listing) => {
