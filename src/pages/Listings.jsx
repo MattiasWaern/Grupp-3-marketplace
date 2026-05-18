@@ -130,6 +130,32 @@ function Listings() {
                             <p>Ingen bild tillgänglig</p>
                         )}
                     </div>
+
+                    <div className="listing-detail-info">
+                        <span className="detail-category">
+                            {getCategoryIcon(attrs.category)} {attrs.category}
+                            {attrs.subcategory && `/ ${attrs.subcategory}`}
+                        </span>
+
+                        <h1>{attrs.title || "Ingen titel"}</h1>
+                        <p className="detail-price">{attrs.price ? `${attrs.price.toLocaleString()} kr`: "Pris saknas" }</p>
+
+                        <div className="detail-meta">
+                            <p> <strong> Plats:</strong>{attrs.location || "Ej angivet"}</p>
+                            <p> <strong> Publicerad:</strong>{formatDate(attrs.publishedAt || attrs.createdAt)}</p>
+                            <p> <strong> Säljare:</strong>{sellerName}</p>
+                        </div>
+
+                        <div className="detail-description-box">
+                            <h3>Beskrivning</h3>
+                            <p>{attrs.description ||"ingen beskrvning angiven av säljaren"}</p>
+                        </div>
+
+                        <button className="contact-seller-btn" onClick={() => alert("Här kommer kontaktlogiken ligga sen")}>
+                            Skicka meddelande
+                        </button>
+                        
+                    </div>
                 </div>
             </div>
         )
