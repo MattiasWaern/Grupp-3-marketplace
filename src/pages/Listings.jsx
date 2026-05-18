@@ -107,11 +107,31 @@ function Listings() {
 
     if(selectedListing){
         const attrs = selectedListing.attributes || selectedListing;
-        const imageUrl = getImageUrl(attrs.iamge);
+        const imageUrl = getImageUrl(attrs.image);
         const sellerName = attrs.user?.data?.attributes?.username || "Anonym säljare";
         
         return (
-            
+            <div className="listing-detail-container">
+                {/* Tillbaka knapp*/}
+                <button className="back-btn" onClick={() => setSelectedListing(null)}> Tillbaka </button>
+
+                <div className="listing-detail-content">
+                    <div className="listing-detail-image-wrapper">
+                        {imageUrl ? (
+                            <img 
+                                src={imageUrl}
+                                alt={attrs.title || "Annonsbild"}
+                                className="detail-image"
+                                onError={(e) => {
+                                    e.target.src = "/path/to/default-image.jpg"; // Sätt en standardbild om laddningen misslyckas
+                                }}
+                            />
+                        ) : (
+                            <p>Ingen bild tillgänglig</p>
+                        )}
+                    </div>
+                </div>
+            </div>
         )
     }
 
