@@ -54,7 +54,7 @@ function Register() {
 }
 
 Register.route = {
-    path: '/register',
+    path: '/signup',
     index: 2,
 };
 
