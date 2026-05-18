@@ -64,7 +64,7 @@ function CreateListing() {
         }
     };
 
-    const uploadImageToStrapi = async (file) => {
+    const uploadImageToStrapi = async (file, token) => {
         const formData = new FormData();
         formData.append("files", file);
 
@@ -72,7 +72,7 @@ function CreateListing() {
             const response = await fetch("http://localhost:1337/api/upload", {
                 method: "POST",
                 headers: {
-                    'Authorization': `fd25e7f558c2ed1ad11eaeb9b25c13325f790864900fe14c08b0130e2fd9cf72af630d1651b8200e83bd0494144aa2081da5ecaab2deb635acaa191cccc795f24cf7b1529371e6e315bb32308906e729d5984dd3da82cbe6300d53454419905046034284f85ec859ad430136c845ed528d614c820219f2de7c5b956601b21af9`  
+                    'Authorization': `Bearer ${token}`
                 },
                 body: formData  
             });
@@ -97,6 +97,15 @@ function CreateListing() {
         setSuccess("");
         setUploadProgress(0);
 
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
+
+        if(!token || !userId){
+            setError("Du måste vara inloggad för att skapa en annons");
+            setLoading(false);
+            return;
+        }
+
         if(!formData.title || !formData.price || !formData.category){
             setError("Titel, pris och kategori måste fyllas i");
             setLoading(false);
@@ -109,7 +118,7 @@ function CreateListing() {
 
             if (imageFile){
                 setUploadProgress(30);
-                imageId = await uploadImageToStrapi(imageFile);
+                imageId = await uploadImageToStrapi(imageFile, token);
                 setUploadProgress(70);
             }
 
@@ -123,6 +132,7 @@ function CreateListing() {
                     category: formData.category,
                     subcategory: selectedSubcategory,
                     publishedAt: new Date().toISOString(), 
+                    user: userId,
                     ...(imageId && { image: imageId })
                 }
             };
@@ -131,7 +141,7 @@ function CreateListing() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `fd25e7f558c2ed1ad11eaeb9b25c13325f790864900fe14c08b0130e2fd9cf72af630d1651b8200e83bd0494144aa2081da5ecaab2deb635acaa191cccc795f24cf7b1529371e6e315bb32308906e729d5984dd3da82cbe6300d53454419905046034284f85ec859ad430136c845ed528d614c820219f2de7c5b956601b21af9`
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify(listingData)
             });
@@ -142,7 +152,7 @@ function CreateListing() {
 
             
             setUploadProgress(100);
-            setSuccess("Annons skapad");
+            setSuccess("Annons skapad och kopplad till användaren");
 
             setFormData({
                 title: "",
