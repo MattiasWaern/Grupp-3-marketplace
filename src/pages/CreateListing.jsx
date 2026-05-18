@@ -342,4 +342,9 @@ function CreateListing() {
     );
 }
 
+CreateListing.route = {
+    path: '/createlisting',
+    index: 4,
+};
+
 export default CreateListing; 

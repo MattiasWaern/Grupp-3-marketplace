@@ -4,7 +4,7 @@ function AboutUs() {
   
   AboutUs.route = {
     path: '/aboutus',
-    index: 2,
+    index: 5,
   };
   
-  export default AboutUs;
+export default AboutUs;

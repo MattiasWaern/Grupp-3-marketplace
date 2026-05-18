@@ -241,4 +241,9 @@ function Listings() {
     );
 }
 
+Listings.route = {
+    path: '/listings',
+    index: 3,
+};
+
 export default Listings;
