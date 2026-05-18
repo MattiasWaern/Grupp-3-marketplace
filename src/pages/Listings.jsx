@@ -7,8 +7,11 @@ function Listings() {
     const [listings, setListings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+
     const [sortBy, setSortBy] = useState("createdAt:desc");
     const [selectedCategory, setSelectedCategory] = useState("");
+
+    const [selectedListing, setSelectedListing] = useState(null);
 
     useEffect(() => {
         fetchListings();
@@ -100,6 +103,16 @@ function Listings() {
                 <p className="no-listings">Inga annonser hittades. Var den första att skapa en annons!</p>
             </div>
         );
+    }
+
+    if(selectedListing){
+        const attrs = selectedListing.attributes || selectedListing;
+        const imageUrl = getImageUrl(attrs.iamge);
+        const sellerName = attrs.user?.data?.attributes?.username || "Anonym säljare";
+        
+        return (
+            
+        )
     }
 
     return (
