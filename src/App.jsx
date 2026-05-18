@@ -1,29 +1,15 @@
-import { Routes, Route } from "react-router-dom";
+import { useState } from 'react';
+import { Outlet } from 'react-router';
 import Header from "./partials/Header";
 import Footer from "./partials/Footer";
-import Start from "./pages/Start"
-import CreateListing from "./pages/CreateListing";
-import Listings from "./pages/Listings";
 
-function Home(){
-  return <h1>Home</h1>
-}
+export default function App() {
 
-function App(){
-  return <> 
+  const [user, setUser] = useState(localStorage.user ? JSON.parse(localStorage.user) : null);
 
-    <Header />
-
-    <Routes>
-      <Route path="/"element={<Start/> } />
-      <Route path="/create"element={<CreateListing/> } />
-      <Route path="/listings" element={<Listings />} />  
-    </Routes>
-    <main></main>
-    
+  return <>
+    <Header user={user} setUser={setUser} />
+    <main><Outlet context={{ user, setUser }} /></main>
     <Footer />
-    </>
-
+  </>;
 }
-
-export default App;

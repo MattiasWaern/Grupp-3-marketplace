@@ -36,3 +36,8 @@ export default function Start() {
     </section>
   </>;
 }
+
+Start.route = {
+    path: '/',
+    index: 1,
+};
