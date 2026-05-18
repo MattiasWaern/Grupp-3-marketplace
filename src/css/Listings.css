@@ -77,6 +77,37 @@
     box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
 }
 
+.listing-card.clickable{
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.listing-card.clickable:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.listing-detail-container{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.back-btn{
+    background: none;
+    border: none;
+    color: #4a5568;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.back-btn:hover {
+    color: #1a202c;
+    text-decoration: underline;
+}
+
 /* Kategori-badge */
 .category-badge {
     position: absolute;
