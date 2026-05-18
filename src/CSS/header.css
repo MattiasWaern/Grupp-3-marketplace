@@ -11,6 +11,10 @@ header {
   flex-direction: column;
 }
 
+.title {
+  color: #0B7D5F;
+}
+
 .topRow {
   display: flex;
   align-items: center;

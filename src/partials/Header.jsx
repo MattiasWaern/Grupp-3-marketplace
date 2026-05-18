@@ -10,7 +10,7 @@ export default function Header() {
     <header>
 
     <div className="topRow">
-      <h1>The Selling Point</h1>
+      <h1 className="title">The Selling Point</h1>
       <input
         type="text"
         placeholder="Sök produkter..."
