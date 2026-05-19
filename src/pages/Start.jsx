@@ -22,7 +22,8 @@ export default function Start() {
           Populära märken!
         </a>
         
-        </div>
+      </div>
+      
       <div className="image-card">
          <BestBuyImage
          className="bestBuy-image"
