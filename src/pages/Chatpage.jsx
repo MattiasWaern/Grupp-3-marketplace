@@ -82,46 +82,40 @@ function ChatPage(){
             time: new Date().toLocaleTimeString("sv-SE", {hour: "2-digit", minute: "2-digit"})  
         };
 
-        setChatMessages([...chatMessages, newMessage]);
+    // Uppdatera meddelandena i den aktiva konversationen
+    const updatedConversations = conversations.map(c => {
+        if (c.id === activeConversation.id){
+            const updatedMessages = [...c.messages, newMessage];
+            const updatedConv = {
+                ...c,
+                lastMessage: typedMessage,
+                time: "Nu",
+                messages: updatedMessages
+            };
+
+            // Håll även vårt aktiva state synkat
+            setActiveConversation(updatedConv);
+            return updatedConv;
+        }
+        return c;
+    });
+        setConversations(updatedConversations);
         setTypedMessage("");
     };
 
     return (
-        <div className="chat-page-container">
-            {/* Knapp för att gå tillbaka till föregående sida */}
-            <button className="back-btn" onClick={() => navigate(-1)}>
-                ← Tillbaka till annonsen
+        <div className="chat-page-wrapper">
+            <button className="back-btn-chat" onClick={() => navigate(-1)}>
+                Tillbaka
             </button>
 
-            <div className="blocket-chat-container standalone">
-                <div className="chat-header">
-                    <div className="chat-avatar">💬</div>
-                    <div className="chat-header-info">
-                        <h4>Chatta med {sellerName}</h4>
-                        <span className="online-dot">{listingTitle}</span>
+            <div className="inbox-layout">
+                <div className="inbox-sidebar">
+                    <div className="sidebar-header">
+                        <h3>Meddelanden</h3>
                     </div>
+                    
                 </div>
-
-                <div className="chat-messages-box">
-                    {chatMessages.map((msg) => (
-                        <div key={msg.id} className={`chat-bubble-wrapper ${msg.sender}`}>
-                            <div className="chat-bubble">
-                                <p>{msg.text}</p>
-                                <span className="chat-time">{msg.time}</span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                <form onSubmit={handleSend} className="chat-input-form">
-                    <input 
-                        type="text" 
-                        placeholder="Skriv ett meddelande..." 
-                        value={typedMessage}
-                        onChange={(e) => setTypedMessage(e.target.value)}
-                    />
-                    <button type="submit" className="chat-send-btn">Skicka</button>
-                </form>
             </div>
         </div>
     );
