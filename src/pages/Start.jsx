@@ -39,6 +39,7 @@ export default function Start() {
 }
 
 Start.route = {
-    path: '/',
-    index: 1,
+  path: '/',
+  label: 'Start',
+  index: 1,
 };
