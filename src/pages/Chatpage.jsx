@@ -6,6 +6,7 @@ function ChatPage(){
     const location = useLocation();
     const navigate = useNavigate();
 
+    // Hårdkodad lista med tidigare konversationer (inkorgen)
     const [conversations, setConversations] = useState([
         {
             id: "1",
