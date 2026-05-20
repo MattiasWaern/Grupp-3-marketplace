@@ -19,18 +19,21 @@ function ChatPage(){
                 { id: 102, sender: "seller", text: "Ja, 4000 kr funkar fint!", time: "18:35" }
             ]
         },
-    ])
+                {
+            id: "2",
+            sellerName: "Mattias Waern",
+            listingTitle: "Katt",
+            lastMessage: "JAAAAAAAA",
+            time: "igår",
+            messages: [
+                { id: 1, sender: "buyer", text: "Hej! Går du ner något i pris?", time: "18:20" },
+                { id: 2, sender: "seller", text: "Ja, 4000 kr funkar fint!", time: "18:35" }
+            ]
+        }
+    ]);
   
 
 
-    // Generera exempelmeddelanden baserat på vilken annons man klickade på
-    useEffect(() => {
-        setChatMessages([
-            {id: 1, sender: "seller", text: `Hej! Roligt att du är intresserad av min ${listingTitle}.`, time: "12:30"},
-            { id: 2, sender: "buyer", text: `Ja precis! Finns den kvar?`, time: "12:34" },            {id: 3, sender: "seller", text: `Hej! Roligt att du är intresserad av min ${listingTitle}.`, time: "12:30"},
-            { id: 3, sender: "seller", text: `Jajamen, det gör den!`, time: "12:35" }
-        ])
-    }, [listingTitle]);
 
 
     const handleSend = (e) => {
