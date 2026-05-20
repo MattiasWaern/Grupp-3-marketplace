@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import '../css/Listings.css';
 
 // Hämtar alla annonser från backend och visar dom
