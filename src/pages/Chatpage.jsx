@@ -34,6 +34,7 @@ function ChatPage(){
         }
     ]);
 
+    
     // State för vilken konversation som är aktiv just nu (null = ingen vald)
     const [activeConversation, setActiveConversation] = useState(null);
     const [typedMessage, setTypedMessage] = useState("");
