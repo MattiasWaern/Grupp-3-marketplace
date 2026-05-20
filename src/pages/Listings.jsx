@@ -152,7 +152,13 @@ if (selectedListing) {
                         {/* KNAPPEN SOM TAR ANVÄNDAREN TILL DEN NYA CHATTSIDAN */}
                         <button 
                             className="contact-seller-btn" 
-                            onClick={() => navigate("/chatpage", { state: { sellerName, listingTitle: attrs.title } })}
+                            onClick={() => navigate("/chatpage", { 
+                                state: { 
+                                    sellerName, 
+                                    listingTitle: attrs.title,
+                                    listingImage: imageUrl
+                                } 
+                            })}
                         >
                             Starta chatt med säljaren
                         </button>

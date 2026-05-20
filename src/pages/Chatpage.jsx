@@ -12,6 +12,7 @@ function ChatPage(){
             id: "1",
             sellerName: "Annika Garcia",
             listingTitle: "iPhone 13 Pro",
+            listingImage: null,
             lastMessage: "JAAAAAAAA",
             time: "igår",
             messages: [
@@ -23,6 +24,7 @@ function ChatPage(){
             id: "2",
             sellerName: "Mattias Waern",
             listingTitle: "Katt",
+            listingImage: null,
             lastMessage: "JAAAAAAAA",
             time: "igår",
             messages: [
@@ -123,7 +125,7 @@ return (
                                 className={`conversation-item ${activeConversation?.id === conv.id ? "active" : ""}`}
                                 onClick={() => setActiveConversation(conv)}
                             >
-                                <div className="conv-avatar"></div>
+                                <div className="conv-avatar">{listing}</div>
                                 <div className="conv-info">
                                     <div className="conv-top-row">
                                         <h4>{conv.sellerName}</h4>
