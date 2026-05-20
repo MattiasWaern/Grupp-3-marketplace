@@ -114,12 +114,30 @@ function ChatPage(){
                     <div className="sidebar-header">
                         <h3>Meddelanden</h3>
                     </div>
-                    
-                </div>
+                    <div className="conversation-list">
+                        {conversations.map((conv) => (
+                            <div
+                                key={conv.id}
+                                className={`conversation-item ${activeConversation?.id === conv.id ? "active" : ""}`}
+                                onClick={() => setActiveConversation(conv)}
+                            >
+                                <div className="conv-avatar"></div>
+                                <div className="conv-info">
+                                    <div className="conv-top-row">
+                                        <h4>{conv.sellerName}</h4>
+                                        <span className="conv-time">{conv.time}</span>
+                                    </div>
+                                </div>
+                                <p className="conv-listing-title">{conv.listingTitle}</p>
+                                <p className="conv-last-msg">{conv.lastMessage}</p>
+
+                            </div>
+                        </div>
+                 ))};
             </div>
         </div>
-    );
-}
+   
+ 
 
 ChatPage.route = {
     path: '/chatpage',
