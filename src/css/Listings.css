@@ -20,18 +20,6 @@
     padding-bottom: 1rem;
 }
 
-.listings-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
-    border-radius: 2px;
-}
-
 /* Filter och sortering */
 
 .filter-sort-controls {
