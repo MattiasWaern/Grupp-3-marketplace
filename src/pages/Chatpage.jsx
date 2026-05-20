@@ -130,14 +130,30 @@ function ChatPage(){
                                 </div>
                                 <p className="conv-listing-title">{conv.listingTitle}</p>
                                 <p className="conv-last-msg">{conv.lastMessage}</p>
-
                             </div>
-                        </div>
-                 ))};
+                        ))}
+                    </div>
+                </div>
+
+                <div className="inbox-chat-area">
+                    {activeConversation ? (
+                        <div className="chat-container-standalone">
+                            <div className="chat-header">
+                                <div className="chat-avatar"></div>
+                                <div className="chat-header-info">
+                                    <h4>{activeConversation.sellerName}</h4>
+                                    <span className="online-dot">{activeConversation.listingTitle}</span>
+                                </div>
+                            </div>
+                    )}
+                </div>
+
+
             </div>
         </div>
+  
    
- 
+         )}
 
 ChatPage.route = {
     path: '/chatpage',
