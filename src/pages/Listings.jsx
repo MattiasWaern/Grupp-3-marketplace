@@ -106,60 +106,58 @@ function Listings() {
         );
     }
 
-    if(selectedListing){
+if (selectedListing) {
         const attrs = selectedListing.attributes || selectedListing;
         const imageUrl = getImageUrl(attrs.image);
         const sellerName = attrs.user?.data?.attributes?.username || "Anonym säljare";
-        
+
         return (
             <div className="listing-detail-container">
-                {/* Tillbaka knapp*/}
-                <button className="back-btn" onClick={() => setSelectedListing(null)}> Tillbaka </button>
+                <button className="back-btn" onClick={() => setSelectedListing(null)}>
+                    Tillbaka till alla annonser
+                </button>
 
                 <div className="listing-detail-content">
                     <div className="listing-detail-image-wrapper">
                         {imageUrl ? (
-                            <img 
-                                src={imageUrl}
-                                alt={attrs.title || "Annonsbild"}
-                                className="detail-image"
-                                onError={(e) => {
-                                    e.target.src = "/path/to/default-image.jpg"; // Sätt en standardbild om laddningen misslyckas
-                                }}
-                            />
+                            <img src={imageUrl} alt={attrs.title} className="detail-image" />
                         ) : (
-                            <p>Ingen bild tillgänglig</p>
+                            <div className="detail-no-image">Ingen bild tillgänglig</div>
                         )}
                     </div>
 
                     <div className="listing-detail-info">
                         <span className="detail-category">
                             {getCategoryIcon(attrs.category)} {attrs.category}
-                            {attrs.subcategory && `/ ${attrs.subcategory}`}
+                            {attrs.subcategory && ` / ${attrs.subcategory}`}
                         </span>
-
-                        <h1>{attrs.title || "Ingen titel"}</h1>
-                        <p className="detail-price">{attrs.price ? `${attrs.price.toLocaleString()} kr`: "Pris saknas" }</p>
-
+                        
+                        <h1>{attrs.title || "Utan titel"}</h1>
+                        <p className="detail-price">{attrs.price ? `${attrs.price.toLocaleString()} kr` : "Pris saknas"}</p>
+                        
                         <div className="detail-meta">
-                            <p> <strong> Plats:</strong>{attrs.location || "Ej angivet"}</p>
-                            <p> <strong> Publicerad:</strong>{formatDate(attrs.publishedAt || attrs.createdAt)}</p>
-                            <p> <strong> Säljare:</strong>{sellerName}</p>
+                            <p> <strong>Plats:</strong> {attrs.location || "Ej angivet"}</p>
+                            <p> <strong>Publicerad:</strong> {formatDate(attrs.publishedAt || attrs.createdAt)}</p>
+                            <p> <strong>Säljare:</strong> {sellerName}</p>
                         </div>
 
                         <div className="detail-description-box">
                             <h3>Beskrivning</h3>
-                            <p>{attrs.description ||"ingen beskrvning angiven av säljaren"}</p>
+                            <p>{attrs.description || "Ingen beskrivning angiven av säljaren."}</p>
                         </div>
 
-                        <button className="contact-seller-btn" onClick={() => alert("Här kommer kontaktlogiken ligga sen")}>
-                            Skicka meddelande
+                        {/* KNAPPEN SOM TAR ANVÄNDAREN TILL DEN NYA CHATTSIDAN */}
+                        <button 
+                            className="contact-seller-btn" 
+                            onClick={() => navigate("/chat", { state: { sellerName, listingTitle: attrs.title } })}
+                        >
+                            Starta chatt med säljaren
                         </button>
-                        
+
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 
     return (
