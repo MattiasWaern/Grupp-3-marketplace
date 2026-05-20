@@ -1,3 +1,177 @@
+/* Övergripande layout för hela chattsidan */
+.chat-page-wrapper {
+    max-width: 1000px;
+    margin: 130px auto;
+    padding: 0 20px;
+}
+
+.back-btn-chat {
+    background: none;
+    border: none;
+    color: #4a5568;
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+/* Flex-layouten som delar upp skärmen i två delar */
+.inbox-layout {
+    display: flex;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    height: 550px; /* Fast höjd på hela systemet så det blir scrollbart inuti */
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+
+.inbox-sidebar {
+    width: 350px;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #1a202c;
+}
+
+.conversation-list {
+    flex: 1;
+    overflow-y: auto; /* Gör så bara listan scrollar */
+}
+
+/* Varje enskilt samtal i listan */
+.conversation-item {
+    display: flex;
+    gap: 12px;
+    padding: 15px 20px;
+    border-bottom: 1px solid #f7fafc;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.conversation-item:hover {
+    background: #f7fafc;
+}
+
+/* Om samtalet är aktivt (markerat) */
+.conversation-item.active {
+    background: #ebf8ff;
+    border-left: 4px solid #319795;
+}
+
+.conv-avatar {
+    width: 40px;
+    height: 40px;
+    background: #edf2f7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.conv-info {
+    flex: 1;
+    min-width: 0; /* Förhindrar text-overflow-buggar */
+}
+
+.conv-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.conv-info h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #2d3748;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.conv-time {
+    font-size: 0.75rem;
+    color: #a0aec0;
+}
+
+.conv-listing-title {
+    margin: 0 0 4px 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.conv-last-msg {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #718096;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.inbox-chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #f7fafc;
+}
+
+/* Gör så att chattrutan fyller ut hela högersidan perfekt */
+.inbox-chat-area .chat-container.standalone {
+    margin-top: 0;
+    border: none;
+    border-radius: 0;
+    height: 100%;
+}
+
+.inbox-chat-area .chat-messages-box {
+    flex: 1;
+    height: auto; /* Låter flexbox styra höjden */
+}
+
+/* Vändskärmen / Tomt läge när ingen chatt är vald */
+.no-chat-selected {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #718096;
+    padding: 40px;
+    text-align: center;
+}
+
+.no-chat-icon {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+    opacity: 0.6;
+}
+
+.no-chat-selected h3 {
+    margin: 0 0 8px 0;
+    color: #2d3748;
+}
+
+.no-chat-selected p {
+    margin: 0;
+    font-size: 0.95rem;
+    max-width: 300px;
+}
+
 /* Container för den fristående chattsidan */
 .chat-page-container {
     max-width: 600px;
@@ -5,17 +179,17 @@
     padding: 20px;
 }
 
-/* Gör chattrutan lite högre och mer centrerad när den är "standalone" */
-.blocket-chat-container.standalone {
+
+.chat-container.standalone {
     margin-top: 10px;
 }
 
-.blocket-chat-container.standalone .chat-messages-box {
-    height: 400px; /* Ger mer utrymme för meddelanden på en helsida */
+.chat-container.standalone .chat-messages-box {
+    height: 400px; 
 }
 
-/* Blocket Chatt Container */
-.blocket-chat-container {
+/* Chatt Container */
+.chat-container {
     margin-top: 30px;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
@@ -119,13 +293,13 @@
     border-top-left-radius: 4px;
 }
 
-/* Köparens bubblor (Högerjusterade - Blocket Blå/Turkos) */
+/* Köparens bubblor  */
 .chat-bubble-wrapper.buyer {
     justify-content: flex-end;
 }
 
 .chat-bubble-wrapper.buyer .chat-bubble {
-    background: #319795; /* Ändra till #0056b3 om du vill ha mörkblå Blocket-färg */
+    background: #319795;  
     color: white;
     border-top-right-radius: 4px;
 }

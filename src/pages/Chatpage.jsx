@@ -46,7 +46,7 @@ function ChatPage(){
                 c => c.sellerName === incomingSeller && c.listingTitle === incomingTitle
             );
 
-            if(existingIndex !== 1){
+            if(existingIndex !== -1){
                 // Om den finns, öppna den direkt
                 setActiveConversation(conversations[existingIndex]);
             } else {
@@ -103,7 +103,7 @@ function ChatPage(){
         setTypedMessage("");
     };
 
-(
+return (
         <div className="chat-page-wrapper">
             <button className="back-btn-chat" onClick={() => navigate(-1)}>
                 Tillbaka

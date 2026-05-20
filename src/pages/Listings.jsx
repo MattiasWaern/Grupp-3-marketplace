@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../css/Listings.css';
+import Chat from "../pages/Chatpage";
 
 // Hämtar alla annonser från backend och visar dom
 function Listings() {
@@ -13,6 +14,8 @@ function Listings() {
     const [selectedCategory, setSelectedCategory] = useState("");
 
     const [selectedListing, setSelectedListing] = useState(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchListings();
@@ -149,7 +152,7 @@ if (selectedListing) {
                         {/* KNAPPEN SOM TAR ANVÄNDAREN TILL DEN NYA CHATTSIDAN */}
                         <button 
                             className="contact-seller-btn" 
-                            onClick={() => navigate("/chat", { state: { sellerName, listingTitle: attrs.title } })}
+                            onClick={() => navigate("/chatpage", { state: { sellerName, listingTitle: attrs.title } })}
                         >
                             Starta chatt med säljaren
                         </button>
