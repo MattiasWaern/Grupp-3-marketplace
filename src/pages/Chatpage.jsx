@@ -31,7 +31,7 @@ function ChatPage(){
             ]
         }
     ]);
-    
+
     // State för vilken konversation som är aktiv just nu (null = ingen vald)
     const [activeConversation, setActiveConversation] = useState(null);
     const [typedMessage, setTypedMessage] = useState("");
@@ -39,7 +39,35 @@ function ChatPage(){
     useEffect(() => {
         const incomingSeller = location.state?.sellerName;
         const incomingTitle = location.state?.listingTitle;
-    })
+
+        if(incomingSeller && incomingTitle){
+            // Kolla om vi redan har en konversation med denna säljare om just denna produkt
+            const existingIndex = conversations.findIndex(
+                c => c.sellerName === incomingSeller && c.listingTitle === incomingTitle
+            );
+
+            if(existingIndex !== 1){
+                // Om den finns, öppna den direkt
+                setActiveConversation(conversations[existingIndex]);
+            } else {
+                // Om den INTE finns, skapa en ny temporär konversation högst upp i listan
+                const newConv = {
+                    id: Date.now().toString(),
+                    sellerName: incomingSeller,
+                    listingTitle: incomingTitle,
+                    lastMessage: "Inga meddelanden än",
+                    time: "Nu",
+                    messages: [
+                        { id: 1, sender: "seller", text: `Hej! Roligt att du är intresserad av min ${incomingTitle}.`, time: "Just nu" }
+                    ]
+                };
+                setConversations([newConv, ...conversations]);
+                setActiveConversation(newConv);
+            }
+
+            window.history.replaceState({}, document.title);
+        }
+    }, [location.state]);
 
 
 
