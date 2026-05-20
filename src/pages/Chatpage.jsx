@@ -23,4 +23,21 @@ function ChatPage(){
             { id: 3, sender: "seller", text: `Jajamen, det gör den!`, time: "12:35" }
         ])
     }, [listingTitle]);
+
+
+    const handleSend = (e) => {
+        e.preventDefault();
+        if (!typedMessage.trim()) return;
+
+        const newMessage = {
+            id: Date.now(),
+            sender: "buyer",
+            text: typedMessage,
+            time: new Date().toLocaleTimeString("sv-SE", {hour: "2-digit", minute: "2-digit"})  
+        };
+
+        setChatMessages([...chatMessages, newMessage]);
+        setTypedMessage("");
+    };
+
 }
