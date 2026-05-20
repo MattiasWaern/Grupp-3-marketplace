@@ -103,21 +103,23 @@ function ChatPage(){
         setTypedMessage("");
     };
 
-    return (
+(
         <div className="chat-page-wrapper">
             <button className="back-btn-chat" onClick={() => navigate(-1)}>
                 Tillbaka
             </button>
 
             <div className="inbox-layout">
+                
+                
                 <div className="inbox-sidebar">
                     <div className="sidebar-header">
                         <h3>Meddelanden</h3>
                     </div>
                     <div className="conversation-list">
                         {conversations.map((conv) => (
-                            <div
-                                key={conv.id}
+                            <div 
+                                key={conv.id} 
                                 className={`conversation-item ${activeConversation?.id === conv.id ? "active" : ""}`}
                                 onClick={() => setActiveConversation(conv)}
                             >
@@ -127,17 +129,18 @@ function ChatPage(){
                                         <h4>{conv.sellerName}</h4>
                                         <span className="conv-time">{conv.time}</span>
                                     </div>
+                                    <p className="conv-listing-title">{conv.listingTitle}</p>
+                                    <p className="conv-last-msg">{conv.lastMessage}</p>
                                 </div>
-                                <p className="conv-listing-title">{conv.listingTitle}</p>
-                                <p className="conv-last-msg">{conv.lastMessage}</p>
                             </div>
                         ))}
                     </div>
                 </div>
 
+                
                 <div className="inbox-chat-area">
                     {activeConversation ? (
-                        <div className="chat-container-standalone">
+                        <div className="chat-container standalone">
                             <div className="chat-header">
                                 <div className="chat-avatar"></div>
                                 <div className="chat-header-info">
@@ -145,15 +148,42 @@ function ChatPage(){
                                     <span className="online-dot">{activeConversation.listingTitle}</span>
                                 </div>
                             </div>
+
+                            <div className="chat-messages-box">
+                                {activeConversation.messages.map((msg) => (
+                                    <div key={msg.id} className={`chat-bubble-wrapper ${msg.sender}`}>
+                                        <div className="chat-bubble">
+                                            <p>{msg.text}</p>
+                                            <span className="chat-time">{msg.time}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <form onSubmit={handleSend} className="chat-input-form">
+                                <input 
+                                    type="text" 
+                                    placeholder="Skriv ett meddelande..." 
+                                    value={typedMessage}
+                                    onChange={(e) => setTypedMessage(e.target.value)}
+                                />
+                                <button type="submit" className="chat-send-btn">Skicka</button>
+                            </form>
+                        </div>
+                    ) : (
+                        
+                        <div className="no-chat-selected">
+                            <div className="no-chat-icon"></div>
+                            <h3>Dina meddelanden</h3>
+                            <p>Välj en konversation i listan till vänster för och börja chatta.</p>
+                        </div>
                     )}
                 </div>
 
-
             </div>
         </div>
-  
-   
-         )}
+    );
+}
 
 ChatPage.route = {
     path: '/chatpage',
