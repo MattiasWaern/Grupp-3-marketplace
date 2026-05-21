@@ -46,7 +46,7 @@ function ChatPage(){
 
     useEffect(() => {
         localStorage.setItem("chats", JSON.stringify(conversations));
-        
+
         // Håll även den öppna chatten synkad om meddelanden uppdateras
         if(activeConversation){
             const current = conversations.find(c => c.id === activeConversation.id);
@@ -62,6 +62,7 @@ function ChatPage(){
     useEffect(() => {
         const incomingSeller = location.state?.sellerName;
         const incomingTitle = location.state?.listingTitle;
+        const incomingImage = location.state?.listingImage;
 
         if(incomingSeller && incomingTitle){
             // Kolla om vi redan har en konversation med denna säljare om just denna produkt
@@ -78,6 +79,7 @@ function ChatPage(){
                     id: Date.now().toString(),
                     sellerName: incomingSeller,
                     listingTitle: incomingTitle,
+                    listingImage: incomingImage,
                     lastMessage: "Inga meddelanden än",
                     time: "Nu",
                     messages: [
@@ -123,6 +125,10 @@ function ChatPage(){
         return c;
     });
         setConversations(updatedConversations);
+
+        const currentUpdated = updatedConversations.find(c => c.id === activeConversation.id);
+        setActiveConversation(currentUpdated);
+
         setTypedMessage("");
     };
 
@@ -146,7 +152,13 @@ return (
                                 className={`conversation-item ${activeConversation?.id === conv.id ? "active" : ""}`}
                                 onClick={() => setActiveConversation(conv)}
                             >
-                                <div className="conv-avatar">{listing}</div>
+                                <div className="conv-avatar">
+                                    {conv.listingImage ? (
+                                        <img src={conv.listingImage} alt="Produkt" className="chat-avatar-img" />
+                                    ) : (
+                                        "?"
+                                    )}
+                                </div>
                                 <div className="conv-info">
                                     <div className="conv-top-row">
                                         <h4>{conv.sellerName}</h4>
@@ -165,7 +177,13 @@ return (
                     {activeConversation ? (
                         <div className="chat-container standalone">
                             <div className="chat-header">
-                                <div className="chat-avatar"></div>
+                                <div className="chat-avatar">
+                                    {activeConversation.listingImage ? (
+                                        <img src={activeConversation.listingImage} alt="Produkt" className="chat-avatar-img" />
+                                    ) : (
+                                        "?"
+                                    )}
+                                </div>
                                 <div className="chat-header-info">
                                     <h4>{activeConversation.sellerName}</h4>
                                     <span className="online-dot">{activeConversation.listingTitle}</span>
