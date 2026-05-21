@@ -6,8 +6,8 @@ function ChatPage(){
     const location = useLocation();
     const navigate = useNavigate();
 
-    // Hårdkodad lista med tidigare konversationer (inkorgen)
-    const [conversations, setConversations] = useState([
+    //Start-konversationer om localStorage är helt tomt
+    const defaultConversations = [
         {
             id: "1",
             sellerName: "Annika Garcia",
@@ -32,7 +32,12 @@ function ChatPage(){
                 { id: 2, sender: "seller", text: "Ja, 4000 kr funkar fint!", time: "18:35" }
             ]
         }
-    ]);
+    ];
+
+    const [conversations, setConversations] = useState(() => {
+        const saved = localStorage.getItem("chats");
+        return saved ? JSON.parse(saved) : defaultConversations;
+    });
 
     
     // State för vilken konversation som är aktiv just nu (null = ingen vald)
@@ -40,8 +45,24 @@ function ChatPage(){
     const [typedMessage, setTypedMessage] = useState("");
 
     useEffect(() => {
+        localStorage.setItem("chats", JSON.stringify(conversations));
+
+        // Håll även den öppna chatten synkad om meddelanden uppdateras
+        if(activeConversation){
+            const current = conversations.find(c => c.id === activeConversation.id);
+            if(current && current.messages.length !== activeConversation.messages.length) {
+                setActiveConversation(current);
+            }
+        }
+    }, [conversations, setActiveConversation]);
+
+
+
+    // Hantera inkommande chatt från en annons
+    useEffect(() => {
         const incomingSeller = location.state?.sellerName;
         const incomingTitle = location.state?.listingTitle;
+        const incomingImage = location.state?.listingImage;
 
         if(incomingSeller && incomingTitle){
             // Kolla om vi redan har en konversation med denna säljare om just denna produkt
@@ -58,6 +79,7 @@ function ChatPage(){
                     id: Date.now().toString(),
                     sellerName: incomingSeller,
                     listingTitle: incomingTitle,
+                    listingImage: incomingImage,
                     lastMessage: "Inga meddelanden än",
                     time: "Nu",
                     messages: [
@@ -103,6 +125,10 @@ function ChatPage(){
         return c;
     });
         setConversations(updatedConversations);
+
+        const currentUpdated = updatedConversations.find(c => c.id === activeConversation.id);
+        setActiveConversation(currentUpdated);
+
         setTypedMessage("");
     };
 
@@ -126,7 +152,13 @@ return (
                                 className={`conversation-item ${activeConversation?.id === conv.id ? "active" : ""}`}
                                 onClick={() => setActiveConversation(conv)}
                             >
-                                <div className="conv-avatar">{listing}</div>
+                                <div className="conv-avatar">
+                                    {conv.listingImage ? (
+                                        <img src={conv.listingImage} alt="Produkt" className="chat-avatar-img" />
+                                    ) : (
+                                        "?"
+                                    )}
+                                </div>
                                 <div className="conv-info">
                                     <div className="conv-top-row">
                                         <h4>{conv.sellerName}</h4>
@@ -145,7 +177,13 @@ return (
                     {activeConversation ? (
                         <div className="chat-container standalone">
                             <div className="chat-header">
-                                <div className="chat-avatar"></div>
+                                <div className="chat-avatar">
+                                    {activeConversation.listingImage ? (
+                                        <img src={activeConversation.listingImage} alt="Produkt" className="chat-avatar-img" />
+                                    ) : (
+                                        "?"
+                                    )}
+                                </div>
                                 <div className="chat-header-info">
                                     <h4>{activeConversation.sellerName}</h4>
                                     <span className="online-dot">{activeConversation.listingTitle}</span>
