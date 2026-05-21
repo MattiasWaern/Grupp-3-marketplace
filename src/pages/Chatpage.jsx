@@ -6,8 +6,8 @@ function ChatPage(){
     const location = useLocation();
     const navigate = useNavigate();
 
-    // Hårdkodad lista med tidigare konversationer (inkorgen)
-    const [conversations, setConversations] = useState([
+    //Start-konversationer om localStorage är helt tomt
+    const defaultConversations = [
         {
             id: "1",
             sellerName: "Annika Garcia",
@@ -32,12 +32,20 @@ function ChatPage(){
                 { id: 2, sender: "seller", text: "Ja, 4000 kr funkar fint!", time: "18:35" }
             ]
         }
-    ]);
+    ];
+
+    const [conversations, setConversations] = useState(() => {
+        const saved = localStorage.getItem("chats");
+        return saved ? JSON.parse(saved) : defaultConversations;
+    });
 
     
     // State för vilken konversation som är aktiv just nu (null = ingen vald)
     const [activeConversation, setActiveConversation] = useState(null);
     const [typedMessage, setTypedMessage] = useState("");
+
+    
+
 
     useEffect(() => {
         const incomingSeller = location.state?.sellerName;
