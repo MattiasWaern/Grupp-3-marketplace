@@ -44,9 +44,21 @@ function ChatPage(){
     const [activeConversation, setActiveConversation] = useState(null);
     const [typedMessage, setTypedMessage] = useState("");
 
-    
+    useEffect(() => {
+        localStorage.setItem("chats", JSON.stringify(conversations));
+        
+        // Håll även den öppna chatten synkad om meddelanden uppdateras
+        if(activeConversation){
+            const current = conversations.find(c => c.id === activeConversation.id);
+            if(current && current.messages.length !== activeConversation.messages.length) {
+                setActiveConversation(current);
+            }
+        }
+    }, [conversations, setActiveConversation]);
 
 
+
+    // Hantera inkommande chatt från en annons
     useEffect(() => {
         const incomingSeller = location.state?.sellerName;
         const incomingTitle = location.state?.listingTitle;
