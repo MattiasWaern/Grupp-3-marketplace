@@ -22,11 +22,12 @@ export default function Header() {
           />
 
           <nav className="navLinks">
-            <NavLink to="/new-ad">Ny annons</NavLink>
+            <NavLink to="/createlisting">Ny annons</NavLink>
             <NavLink to="/login">Logga in</NavLink>
             <NavLink to="/signup" className="signUp">
               Skapa konto
             </NavLink>
+            <NavLink to="/chatpage" >Meddelande</NavLink>
           </nav>
         </div>
 
