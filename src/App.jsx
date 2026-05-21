@@ -3,6 +3,7 @@ import { Outlet } from 'react-router';
 import Header from "./partials/Header";
 import Footer from "./partials/Footer";
 
+
 export default function App() {
 
   const [user, setUser] = useState(localStorage.user ? JSON.parse(localStorage.user) : null);

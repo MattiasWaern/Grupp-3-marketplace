@@ -39,6 +39,8 @@ export default function Header() {
           <NavLink to="/barn">Barn</NavLink>
           <NavLink to="/hem">Hem</NavLink>
           <NavLink to="/elektronik">Elektronik</NavLink>
+
+          <NavLink to="/aboutus" className="aboutLink">Om oss</NavLink>
         </nav>
       </header>
     </>
