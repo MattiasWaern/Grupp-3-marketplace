@@ -48,11 +48,10 @@ export default function DeleteAccount() {
       </button>
     </section>
   )
-
-  DeleteAccount.route = {
-    path: '/deleteaccount',
-    label: 'Delete Account',
-    index: 6,
-  };
-  
 }
+
+DeleteAccount.route = {
+  path: '/deleteaccount',
+  label: 'Delete Account',
+  index: 7,
+};
