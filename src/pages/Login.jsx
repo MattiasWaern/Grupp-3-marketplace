@@ -47,3 +47,10 @@ function Login() {
 
     );
 }
+
+Login.route = {
+    path: '/login',
+    index: 8,
+};
+
+export default Login;
