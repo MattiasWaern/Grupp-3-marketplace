@@ -32,4 +32,18 @@ function Login() {
             console.error("Något gick fel: ", err);
         }
     };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <h2>Logga in</h2>
+
+            <input type="text" placeholder='E-mail eller användarnamn' value={identifier}
+            onChange={(e) => setIdentifier(e.target.value)} />
+            <input type="text" placeholder='Lösenord' value={password}
+            onChange={(e) => setPassword(e.target.value)} />
+
+            <button type='submit'>Logga in</button>
+        </form>
+
+    );
 }
