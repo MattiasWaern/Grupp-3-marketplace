@@ -137,7 +137,7 @@
 .detail-price {
     font-size: 1.75rem;
     font-weight: bold;
-    color: #2b6cb0;
+    color: #319795;
     margin-bottom: 20px;
 }
 
@@ -187,7 +187,7 @@
     position: absolute;
     top: 1rem;
     right: 1rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #319795;
     color: white;
     padding: 0.3rem 0.8rem;
     border-radius: 20px;
@@ -251,7 +251,7 @@
 .listing-price {
     font-size: 1.4rem;
     font-weight: 700;
-    color: #667eea;
+    color: #319795;
     margin: 0.5rem 0; 
 }
 
