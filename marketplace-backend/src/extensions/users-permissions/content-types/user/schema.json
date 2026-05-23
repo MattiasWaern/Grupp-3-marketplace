@@ -66,11 +66,11 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "listings": {
+    "listing": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::listing.listing",
-      "mappedBy": "user"
+      "inversedBy": "user"
     }
   }
 }

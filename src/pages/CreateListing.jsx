@@ -133,7 +133,6 @@ function CreateListing() {
                     category: formData.category,
                     subcategory: selectedSubcategory,
                     publishedAt: new Date().toISOString(), 
-                    user: userId,
                     ...(imageId && { image: imageId })
                 }
             };
