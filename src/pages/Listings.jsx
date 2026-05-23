@@ -26,7 +26,7 @@ function Listings() {
         setLoading(true);
         try {
 
-           let url = `http://localhost:1337/api/listings?populate=*&sort=${sortBy}`;
+           let url =  `http://localhost:1337/api/listings?populate=*&sort=${sortBy}`;
 
             if(selectedCategory){
                 url += `&filters[category][$eq]=${selectedCategory}`;
@@ -44,6 +44,7 @@ function Listings() {
             // Strapi lägger data i data.data arrayen
             setListings(data.data || []);
             setError("")
+            console.log("Annons user-data:", JSON.stringify(data.data[0], null, 2));
         } catch (err) {
             console.error(err);
             setError("Kunde inte hämta annonser");
@@ -112,7 +113,7 @@ function Listings() {
 if (selectedListing) {
         const attrs = selectedListing.attributes || selectedListing;
         const imageUrl = getImageUrl(attrs.image);
-        const sellerName = attrs.user?.data?.attributes?.username || "Anonym säljare";
+        const sellerName = attrs.user?.username || "Anonym säljare";
 
         return (
             <div className="listing-detail-container">
