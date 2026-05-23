@@ -103,6 +103,7 @@ function CreateListing() {
         if(!token || !userId){
             setError("Du måste vara inloggad för att skapa en annons");
             setLoading(false);
+            alert("Du måste vara inloggad för att skapa en annons");
             return;
         }
 
