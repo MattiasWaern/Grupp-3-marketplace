@@ -127,9 +127,9 @@
 }
 
 .detail-category {
-    font-size: 0.9rem;
-    color: #4a5568;
-    background: #edf2f7;
+    font-size: 1rem;
+    color: white;
+    background: #319795;
     padding: 4px 10px;
     border-radius: 20px;
 }
