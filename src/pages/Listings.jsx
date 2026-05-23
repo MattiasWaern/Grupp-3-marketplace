@@ -43,9 +43,8 @@ function Listings() {
 
             // Strapi lägger data i data.data arrayen
             setListings(data.data || []);
-            console.log("Annons user-data:", JSON.stringify(data.data[0], null, 2));
+            console.log("Annons user-data:", JSON.stringify(data.data[0], null, 1));
             setError("")
-            console.log("Annons user-data:", JSON.stringify(data.data[0], null, 2));
         } catch (err) {
             console.error(err);
             setError("Kunde inte hämta annonser");
@@ -114,8 +113,8 @@ function Listings() {
 if (selectedListing) {
         const attrs = selectedListing.attributes || selectedListing;
         const imageUrl = getImageUrl(attrs.image);
-        const sellerName = attrs.sellerName || "Anonym säljare";
-        
+        const sellerName = attrs.user?.username || "Anonym säljare";
+
         return (
             <div className="listing-detail-container">
                 <button className="back-btn" onClick={() => setSelectedListing(null)}>
