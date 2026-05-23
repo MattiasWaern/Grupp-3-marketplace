@@ -147,8 +147,10 @@ function CreateListing() {
                 body: JSON.stringify(listingData)
             });
 
-            if(!response.ok){
-                throw new Error(`HTTP ${response.status}`);
+           if(!response.ok){
+                const errorData = await response.json();
+                console.error("Strapi detaljerat felmeddelande:", errorData); // <--- LÄGG TILL DENNA
+                throw new Error(`HTTP ${response.status}: ${errorData.error?.message}`);
             }
 
             
