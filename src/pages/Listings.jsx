@@ -26,7 +26,7 @@ function Listings() {
         setLoading(true);
         try {
 
-           let url =  `http://localhost:1337/api/listings?populate=*&sort=${sortBy}`;
+           let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user&sort=${sortBy}`;
 
             if(selectedCategory){
                 url += `&filters[category][$eq]=${selectedCategory}`;
@@ -43,6 +43,7 @@ function Listings() {
 
             // Strapi lägger data i data.data arrayen
             setListings(data.data || []);
+            console.log("Annons user-data:", JSON.stringify(data.data[0], null, 2));
             setError("")
             console.log("Annons user-data:", JSON.stringify(data.data[0], null, 2));
         } catch (err) {
@@ -113,8 +114,8 @@ function Listings() {
 if (selectedListing) {
         const attrs = selectedListing.attributes || selectedListing;
         const imageUrl = getImageUrl(attrs.image);
-        const sellerName = attrs.user?.username || "Anonym säljare";
-
+        const sellerName = attrs.sellerName || "Anonym säljare";
+        
         return (
             <div className="listing-detail-container">
                 <button className="back-btn" onClick={() => setSelectedListing(null)}>

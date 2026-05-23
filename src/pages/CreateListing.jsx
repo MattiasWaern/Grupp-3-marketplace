@@ -132,7 +132,8 @@ function CreateListing() {
                     location: formData.location,
                     category: formData.category,
                     subcategory: selectedSubcategory,
-                    publishedAt: new Date().toISOString(), 
+                    publishedAt: new Date().toISOString(),
+                    sellerName: JSON.parse(localStorage.getItem("user"))?.username || "Anonym",
                     ...(imageId && { image: imageId })
                 }
             };

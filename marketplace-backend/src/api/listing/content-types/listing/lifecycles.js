@@ -1,9 +1,8 @@
 module.exports = {
     async beforeCreate(event) {
-        const { params, state } = event;
+        const { params } = event;
         
-        if (state?.auth?.credentials?.id) {
-            params.data.user = state.auth.credentials.id;
-        }
+        const documentId = params?.data?.createdBy || null;
+        console.log("LIFECYCLE PARAMS:", JSON.stringify(params.data, null, 2));
     }
 };
