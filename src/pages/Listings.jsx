@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../css/Listings.css';
 import Chat from "../pages/Chatpage";
+import ReviewForm from '../pages/ReviewForm';
+import ReviewList from '../pages/ReviewList';
 
 // Hämtar alla annonser från backend och visar dom
 function Listings() {
