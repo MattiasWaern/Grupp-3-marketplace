@@ -24,6 +24,7 @@ function Login() {
             if (data.jwt) {
                 localStorage.setItem("token", data.jwt);
                 localStorage.setItem("user", JSON.stringify(data.user));
+                localStorage.setItem("userId", data.user.documentId);
                 console.log("Inloggad!", data.user);
             } else {
                 console.error("Inloggning misslyckades: ", data.error?.message);

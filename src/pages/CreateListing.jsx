@@ -103,6 +103,7 @@ function CreateListing() {
         if(!token || !userId){
             setError("Du måste vara inloggad för att skapa en annons");
             setLoading(false);
+            alert("Du måste vara inloggad för att skapa en annons");
             return;
         }
 
@@ -132,7 +133,6 @@ function CreateListing() {
                     category: formData.category,
                     subcategory: selectedSubcategory,
                     publishedAt: new Date().toISOString(), 
-                    user: userId,
                     ...(imageId && { image: imageId })
                 }
             };
@@ -146,8 +146,10 @@ function CreateListing() {
                 body: JSON.stringify(listingData)
             });
 
-            if(!response.ok){
-                throw new Error(`HTTP ${response.status}`);
+           if(!response.ok){
+                const errorData = await response.json();
+                console.error("Strapi detaljerat felmeddelande:", errorData); // <--- LÄGG TILL DENNA
+                throw new Error(`HTTP ${response.status}: ${errorData.error?.message}`);
             }
 
             

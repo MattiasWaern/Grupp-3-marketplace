@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Listings.css";
 import Chat from "../pages/Chatpage";
+import ReviewForm from '../pages/ReviewForm';
+import ReviewList from '../pages/ReviewList';
 
 // Hämtar alla annonser från backend och visar dom
 function Listings() {
@@ -48,7 +50,7 @@ function Listings() {
   const fetchListings = async () => {
     setLoading(true);
     try {
-      let url = `http://localhost:1337/api/listings?populate=*&sort=${sortBy}`;
+      let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user&sort=${sortBy}`;
 
       if (selectedCategory) {
         url += `&filters[category][$eq]=${selectedCategory}`;
@@ -64,6 +66,7 @@ function Listings() {
 
       // Strapi lägger data i data.data arrayen
       setListings(data.data || []);
+            console.log("Annons user-data:", JSON.stringify(data.data[0], null, 1));
       setError("");
     } catch (err) {
       console.error(err);
@@ -136,7 +139,7 @@ function Listings() {
     const attrs = selectedListing.attributes || selectedListing;
     const imageUrl = getImageUrl(attrs.image);
     const sellerName =
-      attrs.user?.data?.attributes?.username || "Anonym säljare";
+      attrs.user?.username || "Anonym säljare";
 
     return (
       <div className="listing-detail-container">
