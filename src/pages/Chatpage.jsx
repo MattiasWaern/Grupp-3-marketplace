@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import '../css/chatpage.css'
+
 
 function ChatPage(){
     const location = useLocation();
