@@ -28,14 +28,18 @@ function Login() {
             const data = await response.json();
 
             if (data.jwt) {
-                localStorage.setItem("token", data.jwt);
-                localStorage.setItem("user", JSON.stringify(data.user));
-                localStorage.setItem("userId", data.user.documentId);
-                console.log("Inloggad!", data.user);
-                navigate("/");
-            } else {
-                setError(data.error?.message || "Inloggning misslyckades.");
-            }
+                    localStorage.setItem("token", data.jwt);
+                    localStorage.setItem("user", JSON.stringify(data.user));
+                    localStorage.setItem("userId", data.user.documentId);
+                
+                    // enkel men mindre bra lösning, kollar bara om användarnamnet är Admin
+                    if (data.user.username === "Admin") {
+                        navigate("/admin");
+                    } else {
+                        navigate("/");
+                    }
+                }
+
         } catch (err) {
             console.error("Något gick fel: ", err);
             setError("Kunde inte ansluta till servern, försök igen.");
