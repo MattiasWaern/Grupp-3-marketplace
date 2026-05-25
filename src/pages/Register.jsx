@@ -1,13 +1,20 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"
 
 function Register() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    // för felmeddelanden istället för i konsolen
+    const [error, setError] = useState("");
 
+    const navigate = useNavigate();
     // handleSubmit
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // återställning av tidigare felmeddelanden vid nytt försök
+        setError ("");
 
         // trycatch
         try {
@@ -23,18 +30,31 @@ function Register() {
                 }),
             });
             const data = await response.json();
-            // här kan token läggas till när inlogg finns
-            console.log(data);
+            // returnerar data.error om något går fel
+            if (data.error) {
+                setError(data.error.message);
+                return;
+            }
+
+            // spara token direkt och navigera vidare
+            if (data.jwt) {
+                localStorage.setItem("token", data.jwt);
+                localStorage.setItem("user", JSON.stringify(data.user));
+                localStorage.setItem("userId", data.user.documentId);
+                navigate("/");
+            }
+
         } catch (err) {
             console.error("Något gick fel: ", err);
+            setError("Kunde inte ansluta till servern, försök igen.");
         }
     };
-
-    // alt. handleChange?
 
     // formuläret för registeringen
     return (
         <form onSubmit={handleSubmit}>
+
+            {error && <p style={{ color: "red" }}> {error}</p>}
 
             <h2>Skapa konto</h2>
 

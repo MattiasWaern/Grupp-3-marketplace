@@ -1,11 +1,17 @@
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom"
 
 function Login() {
     const [identifier, setIdentifier] = useState("");
     const [password, setPassword] = useState("");
+    // användaren ser fel och inte bara i konsolen
+    const [error, setError] = useState("");
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
 
         try {
             const response = await fetch("http://localhost:1337/api/auth/local", {
@@ -26,11 +32,13 @@ function Login() {
                 localStorage.setItem("user", JSON.stringify(data.user));
                 localStorage.setItem("userId", data.user.documentId);
                 console.log("Inloggad!", data.user);
+                navigate("/");
             } else {
-                console.error("Inloggning misslyckades: ", data.error?.message);
+                setError(data.error?.message || "Inloggning misslyckades.");
             }
         } catch (err) {
             console.error("Något gick fel: ", err);
+            setError("Kunde inte ansluta till servern, försök igen.");
         }
     };
 
@@ -38,9 +46,11 @@ function Login() {
         <form onSubmit={handleSubmit}>
             <h2>Logga in</h2>
 
+            {error && <p style= {{ color: "red" }}>{error}</p>}
+
             <input type="text" placeholder='E-mail eller användarnamn' value={identifier}
             onChange={(e) => setIdentifier(e.target.value)} />
-            <input type="text" placeholder='Lösenord' value={password}
+            <input type="password" placeholder='Lösenord' value={password}
             onChange={(e) => setPassword(e.target.value)} />
 
             <button type='submit'>Logga in</button>
