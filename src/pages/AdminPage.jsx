@@ -56,7 +56,41 @@ function AdminPage() {
             console.error(err);
         }
     };
-    
+
+    return (
+        <div>
+            <h2>Admin - Användare</h2>
+
+            {error && <p style={{ color: "red" }}>{error}</p>}
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Användarnamn</th>
+                        <th>E-mail</th>
+                        <th>Roll</th>
+                        <th>Status</th>
+                        <th>Åtgärd</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {users.map(user => (
+                        <tr key={user.id}>
+                            <td>{user.username}</td>
+                            <td>{user.email}</td>
+                            <td>{user.role?.name || "Ingen roll"}</td>
+                            <td>{user.blocked ? "Avstängd" : "Aktiv" }</td>
+                            <td>
+                                <button onClick={() => handleToggleBlock(user.id)}>
+                                    {user.blocked ? "Aktivera" : "Stäng av"}
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    )
 }
 
 AdminPage.route = {
