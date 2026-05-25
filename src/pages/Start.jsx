@@ -3,6 +3,7 @@ import BrandsImage from "../parts/BrandsImg";
 import HeroImage from "../parts/HeroImage";
 import BestBuyImage from "../parts/BestBuyImg";
 
+
 export default function Start() {
   const token = localStorage.getItem("token");
 
