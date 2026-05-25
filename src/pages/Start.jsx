@@ -4,12 +4,10 @@ import HeroImage from "../parts/HeroImage";
 import BestBuyImage from "../parts/BestBuyImg";
 
 export default function Start() {
-
-  const token = localStorage.getItem("jwt");
+  const token = localStorage.getItem("token");
 
   return (
     <>
-
       <div className="hero-wrapper">
 
         <HeroImage
@@ -20,9 +18,9 @@ export default function Start() {
         <div className="hero-overlay">
           <h2>Redo att rensa garderoben?</h2>
 
-
+          {/* Skickar användaren till /createlisting om inloggad, annars /login */}
           <NavLink
-            to={token ? "/new-ad" : "/login"}
+            to={token ? "/createlisting" : "/login"}
             className="hero-button"
           >
             SÄLJ NU
@@ -40,9 +38,10 @@ export default function Start() {
             src="./images/BrandsImg.png"
             alt="Bags on shelves in a store"
           />
-          <a href="/brands" className="image-button">
+          
+          <NavLink to="/brands" className="image-button">
             Populära märken!
-          </a>
+          </NavLink>
         </div>
 
         <div className="image-card">
@@ -51,9 +50,9 @@ export default function Start() {
             src="./images/BestBuyImg.png"
             alt="Woman looking at clothes"
           />
-          <a href="/cheap" className="image-button">
+          <NavLink to="/cheap" className="image-button">
             Billigast just nu!
-          </a>
+          </NavLink>
         </div>
 
       </section>
