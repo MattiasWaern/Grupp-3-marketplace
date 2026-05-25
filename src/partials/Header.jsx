@@ -1,8 +1,28 @@
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useState,useEffect } from "react";
 
 export default function Header() {
   const [search, setSearch] = useState("");
+  const [isLoggedIn, SetIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+
+  // kör useEffect när headern laddas och kollar om det finns en sparad användare
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+
+    if (token && storedUser){
+      SetIsLoggedIn(true);
+      const userObj = JSON.parse(storedUser);
+      setUsername(userObj.username); // Hämtar namnet
+    } else {
+      SetIsLoggedIn(false);
+      setUsername("");
+    }
+}, []);
+
+// Funktion för att logga ut
 
   return (
     <>
