@@ -31,6 +31,32 @@ function AdminPage() {
             console.error(err);
         }
     };
+
+    const handleToggleBlock = async (id) => {
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`http://localhost:1337/api/admin-users/${id}/toggle-block`, {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                setError("Kunde inte uppdatera användaren");
+                return;
+            }
+
+            const updated = await response.json();
+
+            setUsers(users.map(user => user.id === updated.id ? {...user, blocked: updated.blocked } : user      
+            ));
+        } catch (err) {
+            setError("Något gick fel");
+            console.error(err);
+        }
+    };
+    
 }
 
 AdminPage.route = {
