@@ -22,7 +22,18 @@ export default function Header() {
     }
 }, []);
 
-// Funktion för att logga ut
+  // Funktion för att logga ut
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.getItem("userId");
+
+    SetIsLoggedIn(false);
+    setUsername("");
+
+    // Skicka användaren till startsidan efter utloggning
+    navigate("/");
+  } 
 
   return (
     <>
@@ -42,12 +53,27 @@ export default function Header() {
           />
 
           <nav className="navLinks">
+            <NavLink to="/listings">Annonser</NavLink>
             <NavLink to="/createlisting">Ny annons</NavLink>
-            <NavLink to="/login">Logga in</NavLink>
-            <NavLink to="/signup" className="signUp">
-              Skapa konto
-            </NavLink>
-            <NavLink to="/chatpage" >Meddelande</NavLink>
+            <NavLink to="/chatpage">Meddelande</NavLink>
+
+            {/* Om inloggad, visa användarnamn + logga ut */}
+            {isLoggedIn ? (
+              <>
+                <span className="welcomeText">Hej, {username}!</span>
+                <button onClick={handleLogout} className="logoutBtn">
+                  Logga ut
+                </button>
+              </>
+            ) : (
+              /* Om INTE inloggad, visa Logga in + Skapa konto */
+              <>
+                <NavLink to="/login">Logga in</NavLink>
+                <NavLink to="/signup" className="signUp">
+                  Skapa konto
+                </NavLink>
+              </>
+            )}
           </nav>
         </div>
 
