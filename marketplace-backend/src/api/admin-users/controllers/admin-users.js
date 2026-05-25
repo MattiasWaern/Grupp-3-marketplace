@@ -7,7 +7,7 @@ module.exports = {
             const users = await strapi.entityService.findMany(
                 'plugin::users-permissions.user',
                 {
-                    fields: ['id', 'username', 'email', 'blcoked', 'createdAt'],
+                    fields: ['id', 'username', 'email', 'blocked', 'createdAt'],
                     populate: ['role'],
                 }
             );
