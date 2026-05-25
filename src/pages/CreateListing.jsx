@@ -1,7 +1,6 @@
 import { useState } from "react";
 import '../css/createListing.css';  
 
-// Skapa en annons med titel, beskrivning, pris, plats och publiceringsdatum
 function CreateListing() {  
     const [formData, setFormData] = useState({
         title: "",
@@ -11,7 +10,6 @@ function CreateListing() {
         category: "",
     })
 
-    // state för bildhantering och underkategori
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -20,7 +18,6 @@ function CreateListing() {
     const [uploadProgress, setUploadProgress] = useState(0);
     const [selectedSubcategory, setSelectedSubcategory] = useState("");
 
-    // Kategorier
     const categories = [
         { id: "Elektronik", name: "Elektronik", icon: "?", color: "#667eea"},
         { id: "Kläder",  name: "Kläder", icon: "?", color: "#667eea",
@@ -33,7 +30,6 @@ function CreateListing() {
         { id: "Böcker", name: "Böcker", icon: "?", color: "#667eea"},
     ]
 
-    // Hantera formulärändringar
     const handleChange = (e) => {
         const {name, value} = e.target;
         setFormData(prev => ({
@@ -42,7 +38,6 @@ function CreateListing() {
         }));
     };
 
-    // Hantera bildval och förhandsgranskning
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if(file){
@@ -89,7 +84,6 @@ function CreateListing() {
         }
     }
 
-    // Skapa annons
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true);
@@ -113,7 +107,6 @@ function CreateListing() {
             return;
         }
 
-        // Om en bild har valts, ladda upp den först och få tillbaka dess ID för att koppla den till annonsen
         try {
             let imageId = null;
 
@@ -123,7 +116,6 @@ function CreateListing() {
                 setUploadProgress(70);
             }
 
-            // Skapa annonsen i Strapi, inkludera bild-ID om en bild laddades upp
             const listingData = {
                 data: {
                     title: formData.title,
@@ -179,7 +171,6 @@ function CreateListing() {
         }
     }
 
-    // Hjälpfunktion för att få kategori-ikonen baserat på kategori-ID
     const getCategoryIcon = (categoryId) => {
         const category = categories.find(c => c.id === categoryId);
         return category ? category.icon : "📦";
