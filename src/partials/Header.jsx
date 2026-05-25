@@ -13,15 +13,7 @@ export default function Header() {
             <h1 className="title">The Selling Point</h1>
           </NavLink>
 
-          <input
-            type="text"
-            placeholder="Sök produkter..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="searchBar"
-          />
-
-          <nav className="navLinks">
+                  <nav className="navLinks">
             <NavLink to="/createlisting">Ny annons</NavLink>
             <NavLink to="/login">Logga in</NavLink>
             <NavLink to="/signup" className="signUp">
@@ -39,6 +31,9 @@ export default function Header() {
           <NavLink to="/barn">Barn</NavLink>
           <NavLink to="/hem">Hem</NavLink>
           <NavLink to="/elektronik">Elektronik</NavLink>
+          <NavLink to="/listings" className="allListingsLink">
+            Alla annonser
+          </NavLink>
 
           <NavLink to="/aboutus" className="aboutLink">Om oss</NavLink>
         </nav>
