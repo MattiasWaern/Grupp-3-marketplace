@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
+import '../css/login.css';
 
 function Login() {
     const [identifier, setIdentifier] = useState("");
@@ -58,6 +59,14 @@ function Login() {
             />
 
             <button type='submit'>Logga in</button>
+
+            <div className="form-footer">
+                <p>Har du inget konto än?</p>
+                <NavLink to="/signup" className="signup-link">
+                    Skapa konto här
+                </NavLink>
+            </div>
+        
         </form>
 
     );
