@@ -11,13 +11,17 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Comment": {
+    "title": {
+      "type": "string"
+    },
+    "review": {
       "type": "text"
     },
-    "Rating": {
-      "type": "integer",
-      "min": 1,
-      "max": 5
+    "listing": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::listing.listing",
+      "inversedBy": "reviews"
     }
   }
 }
