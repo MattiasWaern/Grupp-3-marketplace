@@ -22,7 +22,7 @@ export async function fetchDamListings() {
 export async function fetchHerrListings() {
   try {
     const response = await fetch(
-      `${API_URL}/listings/herr`
+      `${API_URL}/listings?populate=*&filters[category][$eq]=Kläder&filters[subcategory][$eq]=Herr`
     );
 
     if (!response.ok) {

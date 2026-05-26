@@ -8,43 +8,37 @@ function Herr() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    async function loadListings() {
+      try {
+        setLoading(true);
+
+        const data = await fetchHerrListings();
+        console.log("HERR DATA:", data);
+
+        setListings(data || []);
+        setError("");
+      } catch (err) {
+        console.error("Fel i Herr.jsx:", err);
+        setError("Kunde inte hämta Herr annonser");
+      } finally {
+        setLoading(false);
+      }
+    }
+
     loadListings();
   }, []);
 
-  const loadListings = async () => {
-    try {
-      setLoading(true);
-
-      const data = await fetchHerrListings();
-
-      setListings(data || []);
-      setError("");
-    } catch (err) {
-      console.error(err);
-      setError("Kunde inte hämta Herr annonser");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return <p>Laddar Herr annonser...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
+  if (loading) return <p>Laddar Herr annonser...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
-    <main className="listings-container">
-      <div>
-        <h1>Herr</h1>
-      </div>
+    <div className="listings-container">
+      <h1>Herr</h1>
 
       {listings.length === 0 ? (
         <p>Inga Herr annonser ännu</p>
       ) : (
-        <section className="listings-grid">
+        <div className="listings-grid">
           {listings.map((item) => {
             const attrs = item.attributes || item;
 
@@ -56,36 +50,32 @@ function Herr() {
                 : null;
 
             return (
-              <article key={item.id} className="listing-card">
+              <div key={item.id} className="listing-card">
                 {imageUrl && (
-                  <figure className="listing-image-container">
+                  <div className="listing-image-container">
                     <img
                       src={imageUrl}
                       alt={attrs?.title || "Bild"}
                       className="listing-image"
                     />
-                  </figure>
+                  </div>
                 )}
 
-                <header>
-                  <h2>{attrs?.title || "Ingen titel"}</h2>
-                </header>
+                <h2>{attrs?.title || "Ingen titel"}</h2>
 
-                <section className="listing-info">
-                  <p>
-                    {attrs?.price
-                      ? `${attrs.price.toLocaleString()} kr`
-                      : "Pris saknas"}
-                  </p>
+                <p>
+                  {attrs?.price
+                    ? `${Number(attrs.price).toLocaleString()} kr`
+                    : "Pris saknas"}
+                </p>
 
-                  <p>{attrs?.location || "Ingen plats"}</p>
-                </section>
-              </article>
+                <p>{attrs?.location || "Ingen plats"}</p>
+              </div>
             );
           })}
-        </section>
+        </div>
       )}
-    </main>
+    </div>
   );
 }
 
