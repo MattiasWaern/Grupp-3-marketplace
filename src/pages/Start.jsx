@@ -60,10 +60,7 @@ export default function Start() {
     <div className="home-page-container">
       {/* Hero-sektionen */}
       <div className="hero-wrapper">
-        <HeroImage
-          src="./images/HomePageImg.png"
-          alt="Clothes on a rack"
-        />
+        <HeroImage src="./images/HomePageImg.png" alt="Clothes on a rack" />
         <div className="hero-overlay">
           <h2>Redo att rensa garderoben?</h2>
           <NavLink
@@ -76,11 +73,9 @@ export default function Start() {
         </div>
       </div>
 
-      {/* Sektionen för senaste annonser - nu med era egna klasser! */}
-      <section className="listings-container home-latest-section">
-        <h2 className="listings-title">
-          Senast upplagda annonser
-        </h2>
+      {/* Sektionen för senaste annonser */}
+      <section className="listings-container">
+        <h2 className="listings-title">Senast upplagda annonser</h2>
 
         {loading && <p className="status-message">Laddar annonser...</p>}
         {error && <p className="status-message error">{error}</p>}
@@ -106,30 +101,40 @@ export default function Start() {
                         alt={attrs.title || "Annonsbild"}
                         className="card-img"
                         onError={(e) => {
-                          e.target.style.display = 'none';
-                          e.target.parentNode.classList.add('image-failed');
+                          e.target.style.display = "none";
+                          e.target.parentNode.classList.add("image-failed");
                         }}
                       />
                     ) : null}
-                    
+
                     <div className="no-image-placeholder">📦</div>
-                    
+
                     {attrs.category && (
                       <span className="category-badge">{attrs.category}</span>
                     )}
                   </div>
 
                   <div className="listing-card-body">
-                    <h3 className="product-card-title">{attrs.title || "Utan titel"}</h3>
-                    
+                    <h3 className="product-card-title">
+                      {attrs.title || "Utan titel"}
+                    </h3>
+
                     <div className="listing-footer">
                       <p className="listing-price">
-                        {attrs.price ? `${attrs.price.toLocaleString()} kr` : "Pris saknas"}
+                        {attrs.price
+                          ? `${attrs.price.toLocaleString()} kr`
+                          : "Pris saknas"}
                       </p>
-                      
+
                       <div className="listing-meta">
-                        {attrs.location && <span className="listing-location">{attrs.location}</span>}
-                        <span className="listing-date">{formatDate(attrs.publishedAt || attrs.createdAt)}</span>
+                        {attrs.location && (
+                          <span className="listing-location">
+                            {attrs.location}
+                          </span>
+                        )}
+                        <span className="listing-date">
+                          {formatDate(attrs.publishedAt || attrs.createdAt)}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -144,7 +149,7 @@ export default function Start() {
 }
 
 Start.route = {
-  path: '/',
-  label: 'Start',
+  path: "/",
+  label: "Start",
   index: 1,
 };
