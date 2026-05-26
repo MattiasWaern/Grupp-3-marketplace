@@ -65,6 +65,28 @@ header {
   margin-left: auto;
 }
 
+.navLinks .chatLink {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+}
+
+.navLinks .chatLink .unreadBadge {
+  background-color: #e53e3e;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 999px;
+  min-width: 18px;
+  height: 18px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 0 0 0 2px white;
+}
+
 .allListingsLink {
   position: absolute;
   left: 50%;

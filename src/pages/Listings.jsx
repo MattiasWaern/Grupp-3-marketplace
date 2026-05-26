@@ -53,8 +53,7 @@ function Listings() {
     }
 
     try {
-      let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user&sort=${sortBy}`;
-
+let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user&sort=${sortBy}`;
       if (selectedCategory) {
         url += `&filters[category][$eqi]=${selectedCategory}`;
       }
@@ -194,6 +193,7 @@ function Listings() {
                     sellerName,
                     listingTitle: attrs.title,
                     listingImage: imageUrl,
+                    sellerId: attrs.user?.documentId, // <-- attrs istället för listing.user
                   },
                 })
               }
