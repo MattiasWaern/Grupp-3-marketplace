@@ -3,7 +3,7 @@ module.exports = {
     {
       method: 'GET',
       path: '/messages/unread-count',
-      handler: 'message.unreadCount', 
+      handler: 'message.unreadCount',
       config: {
         policies: [],
         middlewares: [],

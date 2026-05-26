@@ -71,6 +71,12 @@
       "relation": "oneToOne",
       "target": "api::listing.listing",
       "inversedBy": "user"
+    },
+    "messages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::message.message",
+      "mappedBy": "sender"
     }
   }
 }

@@ -201,6 +201,7 @@ function Listings() {
                     sellerName,
                     listingTitle: attrs.title,
                     listingImage: imageUrl,
+                    sellerId: attrs.user?.documentId, // <-- attrs istället för listing.user
                   },
                 })
               }
