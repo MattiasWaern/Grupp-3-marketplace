@@ -1,16 +1,107 @@
-# React + Vite
+#  Grupp3 - The Selling Point
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Ett marketplace byggt av Grupp 3 – FE25-KYH  
+> **Backend:** Strapi CMS  
+> **Frontend:** React + Vite
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+##  Om projektet
 
-## React Compiler
+**The Selling Point** är en marketplace-applikation där användare kan:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+-  Skapa konto/login
+-  Utforska annonser
+-  Köpa produkter
+-  Sälja produkter
+-  Kontakta säljare
+-  Lägga upp egna annonser
+-  Logga in som admin
 
-## Expanding the ESLint configuration
+Projektet är utvecklat som ett skolprojekt inom kursen **Javascript 3** på KYH.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+##  Teknikstack
+
+| Del | Teknik | Version |
+|------|---------|----------|
+| Frontend | React + Vite | React 19 |
+| Backend | Strapi CMS | v5.45.0 |
+| Databas | SQLite (`better-sqlite3`) | – |
+| Styling | CSS / Styled Components | – |
+
+---
+
+##  Kom igång
+
+###  Förutsättningar
+
+Se till att du har installerat:
+
+- Node.js >= 20.0.0
+- npm >= 6.0.0
+
+---
+
+## 1️ Klona projektet
+
+```bash
+git clone https://github.com/MattiasWaern/Grupp-3-marketplace.git
+
+cd Grupp-3-marketplace
+```
+
+---
+
+## 2️ Starta Backend (Strapi)
+
+```bash
+cd marketplace-backend
+
+npm install
+
+npm run develop
+```
+
+###  Backend körs på:
+
+- API: `http://localhost:1337`
+- Admin-panel: `http://localhost:1337/admin`
+
+###  Admininloggning
+
+| Fält | Värde |
+|------|--------|
+| E-post | `grupp3@gmail.com` |
+| Lösenord | `Viärgrupp3!` |
+
+---
+
+## 3️ Starta Frontend (React + Vite)
+
+Öppna ett nytt terminalfönster och kör:
+
+```bash
+npm install
+
+npm run dev
+```
+
+###  Frontend körs på:
+
+`http://localhost:5173`
+
+
+
+
+
+##  Teamet – Grupp 3
+
+| Namn |
+|------|
+| Robin |
+| Luna |
+| Helena |
+| Sofia |
+| Mattias |
