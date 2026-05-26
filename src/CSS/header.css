@@ -65,3 +65,21 @@ header {
   margin-left: auto;
 }
 
+.chatLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.unreadBadge {
+  background-color: #ff4d4d;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+  display: inline-block;
+  min-width: 10px;
+  text-align: center;
+  line-height: 1;
+}
