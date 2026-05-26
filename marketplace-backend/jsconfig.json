@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
     "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "checkJs": true
-  },
-  "exclude": ["node_modules", "dist", ".strapi"]
+    "moduleResolution": "nodenext",
+    "target": "ES2021",
+    "checkJs": true,
+    "allowJs": true
+  }
 }

@@ -59,21 +59,11 @@ export default function Header() {
     <>
       <header>
         <div className="topRow">
-          
           <NavLink to="/" className="titleLink">
             <h1 className="title">The Selling Point</h1>
           </NavLink>
 
-          <input
-            type="text"
-            placeholder="Sök produkter..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="searchBar"
-          />
-
           <nav className="navLinks">
-            <NavLink to="/listings">Annonser</NavLink>
             <NavLink to="/createlisting">Ny annons</NavLink>
             
             
@@ -87,16 +77,28 @@ export default function Header() {
             {/* Om inloggad, visa användarnamn plus logga ut */}
             {isLoggedIn ? (
               <>
-                <span className="welcomeText">Hej, {username}!</span>
-                <button onClick={handleLogout} className="logoutBtn">
+                <span className="welcomeText">
+                  Hej, {username}!
+                </span>
+
+                <button
+                  onClick={handleLogout}
+                  className="logoutBtn"
+                >
                   Logga ut
                 </button>
               </>
             ) : (
               /* Om INTE inloggad, visa Logga in plus Skapa konto */
               <>
-                <NavLink to="/login">Logga in</NavLink>
-                <NavLink to="/signup" className="signUp">
+                <NavLink to="/login">
+                  Logga in
+                </NavLink>
+
+                <NavLink
+                  to="/signup"
+                  className="signUp"
+                >
                   Skapa konto
                 </NavLink>
               </>
@@ -108,12 +110,30 @@ export default function Header() {
 
         <nav className="categoryLinks">
           <NavLink to="/dam">Dam</NavLink>
-          <NavLink to="/herr">Herr</NavLink>
-          <NavLink to="/barn">Barn</NavLink>
-          <NavLink to="/hem">Hem</NavLink>
-          <NavLink to="/elektronik">Elektronik</NavLink>
 
-          <NavLink to="/aboutus" className="aboutLink">Om oss</NavLink>
+          <NavLink to="/herr">Herr</NavLink>
+
+          <NavLink to="/barn">Barn</NavLink>
+
+          <NavLink to="/hem">Hem</NavLink>
+
+          <NavLink to="/elektronik">
+            Elektronik
+          </NavLink>
+
+          <NavLink
+            to="/listings"
+            className="allListingsLink"
+          >
+            Alla annonser
+          </NavLink>
+
+          <NavLink
+            to="/aboutus"
+            className="aboutLink"
+          >
+            Om oss
+          </NavLink>
         </nav>
       </header>
     </>

@@ -27,7 +27,7 @@ module.exports = {
                 id
             );
 
-            if (user) {
+            if (!user) {
                 return ctx.throw(404, 'Användare hittades inte');
             }
 

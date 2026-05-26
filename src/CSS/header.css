@@ -86,3 +86,10 @@ header {
   line-height: 1;
   box-shadow: 0 0 0 2px white;
 }
+
+.allListingsLink {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+}

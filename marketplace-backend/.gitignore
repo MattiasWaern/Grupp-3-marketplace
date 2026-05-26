@@ -129,6 +129,8 @@ dist
 build
 .strapi-updater.json
 .strapi-cloud.json
+my-strapi-project/.tmp/
+*.db
 
 **/.tmp/
 **/dist/

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Listings.css";
-import { fetchDamListings } from "../utils/listings";
+import { fetchBarnListings } from "../utils/listings";
 
-function Dam() {
+function Barn() {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -19,15 +19,15 @@ function Dam() {
     try {
       setLoading(true);
 
-      const data = await fetchDamListings();
+      const data = await fetchBarnListings();
 
-      console.log("Dam DATA:", data);
+      console.log("Barn DATA:", data);
 
       setListings(data || []);
       setError("");
     } catch (err) {
       console.error(err);
-      setError("Kunde inte hämta Dam annonser");
+      setError("Kunde inte hämta Barn annonser");
     } finally {
       setLoading(false);
     }
@@ -44,7 +44,7 @@ function Dam() {
   };
 
   if (loading) {
-    return <p>Laddar Dam annonser...</p>;
+    return <p>Laddar Barn annonser...</p>;
   }
 
   if (error) {
@@ -63,7 +63,7 @@ function Dam() {
           className="back-btn"
           onClick={() => setSelectedListing(null)}
         >
-          Tillbaka till Dam
+          Tillbaka till Barn
         </button>
 
         <div className="listing-detail-content">
@@ -138,10 +138,10 @@ function Dam() {
   // LISTA
   return (
     <div className="listings-container">
-      <h1>Dam</h1>
+      <h1>Barn</h1>
 
       {listings.length === 0 ? (
-        <p>Inga Dam annonser ännu</p>
+        <p>Inga Barn annonser ännu</p>
       ) : (
         <div className="listings-grid">
           {listings.map((item) => {
@@ -183,9 +183,9 @@ function Dam() {
   );
 }
 
-Dam.route = {
-  path: "/Dam",
+Barn.route = {
+  path: "/Barn",
   index: 9,
 };
 
-export default Dam;
+export default Barn;

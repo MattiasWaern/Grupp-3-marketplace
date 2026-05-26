@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Listings.css";
 import Chat from "../pages/Chatpage";
-import ReviewForm from '../pages/ReviewForm';
-import ReviewList from '../pages/ReviewList';
+import ReviewForm from "../pages/ReviewForm";
+import ReviewList from "../pages/ReviewList";
 
 // Hämtar alla annonser från backend och visar dom
 function Listings() {
-  // State
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   const [sortBy, setSortBy] = useState("createdAt:desc");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [selectedListing, setSelectedListing] = useState(null);
 
@@ -46,13 +46,16 @@ function Listings() {
       console.error("Kunde inte ta bort annonsen", err);
     }
   };
-  // Funktion för att hämta annonser från backend
+
   const fetchListings = async () => {
-    setLoading(true);
+    if (listings.length === 0) {
+      setLoading(true);
+    }
+
     try {
 let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user&sort=${sortBy}`;
       if (selectedCategory) {
-        url += `&filters[category][$eq]=${selectedCategory}`;
+        url += `&filters[category][$eqi]=${selectedCategory}`;
       }
 
       const response = await fetch(url);
@@ -60,12 +63,12 @@ let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
       }
+
       const data = await response.json();
+
       console.log("Hämtade annonser:", data);
 
-      // Strapi lägger data i data.data arrayen
       setListings(data.data || []);
-            console.log("Annons user-data:", JSON.stringify(data.data[0], null, 1));
       setError("");
     } catch (err) {
       console.error(err);
@@ -75,10 +78,11 @@ let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user
     }
   };
 
-  // Formatera datum
   const formatDate = (dateString) => {
     if (!dateString) return "Inget datum";
+
     const date = new Date(dateString);
+
     return date.toLocaleDateString("sv-SE", {
       year: "numeric",
       month: "long",
@@ -86,36 +90,38 @@ let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user
     });
   };
 
-  // Hämta kategori ikon med riktiga emojis
   const getCategoryIcon = (category) => {
     const icons = {
       Elektronik: "?",
       Kläder: "?",
-      Böcker: "?",
+      Hem: "?",
     };
+
     return icons[category] || "?";
   };
 
-  // Hjälpfunktion för att hämta bild-URL från Strapis komplexa struktur
-  const getImageUrl = (image) => {
-    if (!image) return null;
+ const getImageUrl = (image) => {
+  if (!image) return null;
 
-    // För Strapi v4+ med populera
-    if (image.data?.attributes?.url) {
-      return `http://localhost:1337${image.data.attributes.url}`;
-    }
-    // För direkt URL
-    if (image.url) {
-      return `http://localhost:1337${image.url}`;
-    }
-    // För äldre versioner
-    if (image.data && typeof image.data === "string") {
-      return `http://localhost:1337${image.data}`;
-    }
-    return null;
-  };
+  if (image.url) {
+    return `http://localhost:1337${image.url}`;
+  }
 
-  if (loading) {
+  return null;
+};
+  const filteredListings = listings.filter((listing) => {
+    const attrs = listing.attributes || listing;
+    const search = searchTerm.toLowerCase();
+
+    return (
+      attrs.title?.toLowerCase().includes(search) ||
+      attrs.description?.toLowerCase().includes(search) ||
+      attrs.category?.toLowerCase().includes(search) ||
+      attrs.location?.toLowerCase().includes(search)
+    );
+  });
+
+  if (loading && listings.length === 0) {
     return <p className="loading-text">Laddar annonser...</p>;
   }
 
@@ -123,22 +129,10 @@ let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user
     return <p className="error-text">{error}</p>;
   }
 
-  if (listings.length === 0) {
-    return (
-      <div className="listings-container">
-        <h1 className="listings-title">Alla annonser</h1>
-        <p className="no-listings">
-          Inga annonser hittades. Var den första att skapa en annons!
-        </p>
-      </div>
-    );
-  }
-
   if (selectedListing) {
     const attrs = selectedListing.attributes || selectedListing;
     const imageUrl = getImageUrl(attrs.image);
-    const sellerName =
-      attrs.user?.username || "Anonym säljare";
+    const sellerName = attrs.user?.username || "Anonym säljare";
 
     return (
       <div className="listing-detail-container">
@@ -162,6 +156,7 @@ let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user
             </span>
 
             <h1>{attrs.title || "Utan titel"}</h1>
+
             <p className="detail-price">
               {attrs.price
                 ? `${attrs.price.toLocaleString()} kr`
@@ -170,16 +165,15 @@ let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user
 
             <div className="detail-meta">
               <p>
-                {" "}
                 <strong>Plats:</strong> {attrs.location || "Ej angivet"}
               </p>
+
               <p>
-                {" "}
                 <strong>Publicerad:</strong>{" "}
                 {formatDate(attrs.publishedAt || attrs.createdAt)}
               </p>
+
               <p>
-                {" "}
                 <strong>Säljare:</strong> {sellerName}
               </p>
             </div>
@@ -191,7 +185,6 @@ let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user
               </p>
             </div>
 
-            {/* KNAPPEN SOM TAR ANVÄNDAREN TILL DEN NYA CHATTSIDAN */}
             <button
               className="contact-seller-btn"
               onClick={() =>
@@ -207,27 +200,30 @@ let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user
             >
               Starta chatt med säljaren
             </button>
-            {/* {localStorage.getItem("userId") == attrs.user?.data?.id && ( */}
-              <>
-                <button
-                  className="contact-seller-btn"
-                  onClick={() =>
-                    navigate("/editlisting", {
-                      state: { listing: { id: selectedListing.id, ...attrs } },
-                    })
-                  }
-                >
-                  Redigera annons
-                </button>
-                <button
-                  className="contact-seller-btn"
-                  style={{ backgroundColor: "red" }}
-                  onClick={() => handleDelete(selectedListing.id)}
-                >
-                  Ta bort annons
-                </button>
-              </>
-            
+
+            <button
+              className="contact-seller-btn"
+              onClick={() =>
+                navigate("/editlisting", {
+                  state: {
+                    listing: {
+                      id: selectedListing.id,
+                      ...attrs,
+                    },
+                  },
+                })
+              }
+            >
+              Redigera annons
+            </button>
+
+            <button
+              className="contact-seller-btn"
+              style={{ backgroundColor: "red" }}
+              onClick={() => handleDelete(selectedListing.id)}
+            >
+              Ta bort annons
+            </button>
           </div>
         </div>
       </div>
@@ -240,7 +236,20 @@ let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user
 
       <div className="filter-sort-controls">
         <div className="control-group">
+          <label htmlFor="search-input">Sök:</label>
+
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Sök efter vara..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+
+        <div className="control-group">
           <label htmlFor="category-select">Kategori:</label>
+
           <select
             id="category-select"
             value={selectedCategory}
@@ -249,12 +258,13 @@ let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user
             <option value="">Alla kategorier</option>
             <option value="Elektronik">Elektronik</option>
             <option value="Kläder">Kläder</option>
-            <option value="Böcker">Böcker</option>
+            <option value="Hem">Hem</option>
           </select>
         </div>
 
         <div className="control-group">
           <label htmlFor="sort-select">Sortera efter:</label>
+
           <select
             id="sort-select"
             value={sortBy}
@@ -269,11 +279,11 @@ let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user
         </div>
       </div>
 
-      {listings.length === 0 ? (
+      {filteredListings.length === 0 ? (
         <p className="no-listings">Inga annonser matchar dina val.</p>
       ) : (
         <div className="listings-grid">
-          {listings.map((listing) => {
+          {filteredListings.map((listing) => {
             const attrs = listing.attributes || listing;
             const imageUrl = getImageUrl(attrs.image);
 

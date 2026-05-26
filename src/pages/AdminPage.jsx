@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "../css/adminpage.css";
 
 function AdminPage() {
     const [users, setUsers] = useState([]);
@@ -61,9 +62,9 @@ function AdminPage() {
         <div>
             <h2>Admin - Användare</h2>
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
 
-            <table>
+            <table className="admin-table">
                 <thead>
                     <tr>
                         <th>Användarnamn</th>
@@ -79,9 +80,14 @@ function AdminPage() {
                             <td>{user.username}</td>
                             <td>{user.email}</td>
                             <td>{user.role?.name || "Ingen roll"}</td>
-                            <td>{user.blocked ? "Avstängd" : "Aktiv" }</td>
                             <td>
-                                <button onClick={() => handleToggleBlock(user.id)}>
+                                <span className={user.blocked ? "status-blocked" : "status-active"}>
+                                    {user.blocked ? "Avstängd" : "Aktiv" }
+                                </span>
+                            </td>
+                            <td>
+                                <button className={user.blocked ? "btn-active" : "btn-block"}
+                                    onClick={() => handleToggleBlock(user.id)}>
                                     {user.blocked ? "Aktivera" : "Stäng av"}
                                 </button>
                             </td>
