@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 
 export default function Header() {
   const [search, setSearch] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
-  const [unreadMessages, setUnreadMessages] = useState(0); 
+  const [unreadMessages, setUnreadMessages] = useState(0);
   const navigate = useNavigate();
 
   // Kör useEffect när headern laddas och kollar om det finns en sparad användare
@@ -22,18 +22,19 @@ export default function Header() {
       fetch("http://localhost:1337/api/messages/unread-count", {
         method: "GET",
         headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       })
-        .then(res => res.json())
-        .then(data => {
-          if (data && typeof data.unreadCount === 'number') {
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && typeof data.unreadCount === "number") {
             setUnreadMessages(data.unreadCount); // Sparar siffran i state
           }
         })
-        .catch(err => console.error("Kunde inte hämta olästa meddelanden:", err));
-
+        .catch((err) =>
+          console.error("Kunde inte hämta olästa meddelanden:", err),
+        );
     } else {
       setIsLoggedIn(false);
       setUsername("");
@@ -45,7 +46,7 @@ export default function Header() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    localStorage.removeItem("userId"); 
+    localStorage.removeItem("userId");
 
     setIsLoggedIn(false);
     setUsername("");
@@ -65,40 +66,32 @@ export default function Header() {
 
           <nav className="navLinks">
             <NavLink to="/createlisting">Ny annons</NavLink>
-            
-            
-          <NavLink to="/chatpage" className="chatLink">
-            Meddelande
-            {unreadMessages > 0 && (
-              <span className="unreadBadge">{unreadMessages}</span>
-            )}
-          </NavLink>
+
+            <NavLink to="/chatpage" className="chatLink">
+              Meddelande
+              {unreadMessages > 0 && (
+                <span className="unreadBadge">{unreadMessages}</span>
+              )}
+            </NavLink>
 
             {/* Om inloggad, visa användarnamn plus logga ut */}
             {isLoggedIn ? (
               <>
-                <span className="welcomeText">
-                  Hej, {username}!
-                </span>
+                
 
-                <button
-                  onClick={handleLogout}
-                  className="logoutBtn"
-                >
+                <button onClick={handleLogout} className="logoutBtn">
                   Logga ut
                 </button>
+                <NavLink to="/profile">
+                  Min profil
+                </NavLink>
               </>
             ) : (
               /* Om INTE inloggad, visa Logga in plus Skapa konto */
               <>
-                <NavLink to="/login">
-                  Logga in
-                </NavLink>
+                <NavLink to="/login">Logga in</NavLink>
 
-                <NavLink
-                  to="/signup"
-                  className="signUp"
-                >
+                <NavLink to="/signup" className="signUp">
                   Skapa konto
                 </NavLink>
               </>
@@ -117,21 +110,13 @@ export default function Header() {
 
           <NavLink to="/hem">Hem</NavLink>
 
-          <NavLink to="/elektronik">
-            Elektronik
-          </NavLink>
+          <NavLink to="/elektronik">Elektronik</NavLink>
 
-          <NavLink
-            to="/listings"
-            className="allListingsLink"
-          >
+          <NavLink to="/listings" className="allListingsLink">
             Alla annonser
           </NavLink>
 
-          <NavLink
-            to="/aboutus"
-            className="aboutLink"
-          >
+          <NavLink to="/aboutus" className="aboutLink">
             Om oss
           </NavLink>
         </nav>
