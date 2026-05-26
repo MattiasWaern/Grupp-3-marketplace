@@ -95,7 +95,7 @@ function Listings() {
     const icons = {
       Elektronik: "?",
       Kläder: "?",
-      Böcker: "?",
+      Hem: "?",
     };
 
     return icons[category] || "?";
@@ -258,7 +258,7 @@ function Listings() {
             <option value="">Alla kategorier</option>
             <option value="Elektronik">Elektronik</option>
             <option value="Kläder">Kläder</option>
-            <option value="Böcker">Böcker</option>
+            <option value="Hem">Hem</option>
           </select>
         </div>
 

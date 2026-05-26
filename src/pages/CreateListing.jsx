@@ -27,7 +27,7 @@ function CreateListing() {
             { id: "Barn", name: "Barn", icon: "?" }
         ]
     },
-        { id: "Böcker", name: "Böcker", icon: "?", color: "#667eea"},
+        { id: "Hem", name: "Hem", icon: "?", color: "#667eea"},
     ]
 
     const handleChange = (e) => {
@@ -125,10 +125,11 @@ function CreateListing() {
                     category: formData.category,
                     subcategory: selectedSubcategory,
                     publishedAt: new Date().toISOString(), 
-                    ...(imageId && { image: imageId })
+                    ...(imageId && { image: [imageId] })
+                    
                 }
             };
-
+                console.log("IMAGE ID:", imageId);
             const response = await fetch("http://localhost:1337/api/listings", {
                 method: "POST",
                 headers: {

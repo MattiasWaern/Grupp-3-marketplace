@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../css/Listings.css";
 import { fetchHemListings } from "../utils/listings";
 
@@ -6,6 +7,9 @@ function Hem() {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [selectedListing, setSelectedListing] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadListings();
@@ -17,6 +21,8 @@ function Hem() {
 
       const data = await fetchHemListings();
 
+      console.log("Hem DATA:", data);
+
       setListings(data || []);
       setError("");
     } catch (err) {
@@ -27,31 +33,128 @@ function Hem() {
     }
   };
 
-  if (loading) return <p>Laddar Hem annonser...</p>;
-  if (error) return <p>{error}</p>;
+  const getImageUrl = (image) => {
+    if (!image) return null;
 
-  return (
-    <main className="listings-container">
-      <div>
-        <h1>Hem</h1>
+    if (image.url) {
+      return `http://localhost:1337${image.url}`;
+    }
+
+    return null;
+  };
+
+  if (loading) {
+    return <p>Laddar Hem annonser...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  // DETALJVY
+  if (selectedListing) {
+    const attrs = selectedListing.attributes || selectedListing;
+    const imageUrl = getImageUrl(attrs.image);
+    const sellerName = attrs.user?.username || "Anonym säljare";
+
+    return (
+      <div className="listing-detail-container">
+        <button
+          className="back-btn"
+          onClick={() => setSelectedListing(null)}
+        >
+          Tillbaka till Hem
+        </button>
+
+        <div className="listing-detail-content">
+          <div className="listing-detail-image-wrapper">
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={attrs.title}
+                className="detail-image"
+              />
+            ) : (
+              <div className="detail-no-image">
+                Ingen bild tillgänglig
+              </div>
+            )}
+          </div>
+
+          <div className="listing-detail-info">
+            <span className="detail-category">
+              {attrs.category}
+              {attrs.subcategory && ` / ${attrs.subcategory}`}
+            </span>
+
+            <h1>{attrs.title || "Utan titel"}</h1>
+
+            <p className="detail-price">
+              {attrs.price
+                ? `${Number(attrs.price).toLocaleString()} kr`
+                : "Pris saknas"}
+            </p>
+
+            <div className="detail-meta">
+              <p>
+                <strong>Plats:</strong>{" "}
+                {attrs.location || "Ej angivet"}
+              </p>
+
+              <p>
+                <strong>Säljare:</strong> {sellerName}
+              </p>
+            </div>
+
+            <div className="detail-description-box">
+              <h3>Beskrivning</h3>
+
+              <p>
+                {attrs.description ||
+                  "Ingen beskrivning angiven av säljaren."}
+              </p>
+            </div>
+
+            <button
+              className="contact-seller-btn"
+              onClick={() =>
+                navigate("/chatpage", {
+                  state: {
+                    sellerName,
+                    listingTitle: attrs.title,
+                    listingImage: imageUrl,
+                  },
+                })
+              }
+            >
+              Starta chatt med säljaren
+            </button>
+          </div>
+        </div>
       </div>
+    );
+  }
+
+  // LISTA
+  return (
+    <div className="listings-container">
+      <h1>Hem</h1>
 
       {listings.length === 0 ? (
         <p>Inga Hem annonser ännu</p>
       ) : (
-        <section className="listings-grid">
+        <div className="listings-grid">
           {listings.map((item) => {
             const attrs = item.attributes || item;
 
-            const imageUrl =
-              attrs?.image?.data?.attributes?.url
-                ? `http://localhost:1337${attrs.image.data.attributes.url}`
-                : attrs?.image?.url
-                ? `http://localhost:1337${attrs.image.url}`
-                : null;
+            const imageUrl = getImageUrl(attrs.image);
 
             return (
-              <article key={item.id} className="listing-card">
+              <div
+                key={item.id}
+                className="listing-card clickable"
+                onClick={() => setSelectedListing(item)}
+              >
                 {imageUrl && (
                   <div className="listing-image-container">
                     <img
@@ -66,23 +169,23 @@ function Hem() {
 
                 <p>
                   {attrs?.price
-                    ? `${attrs.price.toLocaleString()} kr`
+                    ? `${Number(attrs.price).toLocaleString()} kr`
                     : "Pris saknas"}
                 </p>
 
                 <p>{attrs?.location || "Ingen plats"}</p>
-              </article>
+              </div>
             );
           })}
-        </section>
+        </div>
       )}
-    </main>
+    </div>
   );
 }
 
 Hem.route = {
-  path: "/hem",
-  index: 10,
+  path: "/Hem",
+  index: 9,
 };
 
 export default Hem;

@@ -296,3 +296,8 @@
     color: #e53e3e;
 }
 
+.listing-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
