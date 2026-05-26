@@ -83,12 +83,13 @@ const groupMessagesIntoConversations = (messages, currentUserId) => {
       };
     }
 
-    chatMap[key].messages.push({
-      id: msg.id,
-      sender: isISender ? "buyer" : "seller",
-      text: text,
-      time: new Date(msg.createdAt).toLocaleTimeString("sv-SE", { hour: "2-digit", minute: "2-digit" }),
-    });
+        chatMap[key].messages.push({
+        id: msg.id,
+        documentId: msg.documentId, // <-- lägg till denna
+        sender: isISender ? "buyer" : "seller",
+        text: text,
+        time: new Date(msg.createdAt).toLocaleTimeString("sv-SE", { hour: "2-digit", minute: "2-digit" }),
+        });
 
     chatMap[key].lastMessage = text;
   });
@@ -128,18 +129,22 @@ useEffect(() => {
 
 const markMessagesAsRead = async (conversation) => {
   const unreadMessages = conversation.messages.filter(
-    (msg) => msg.sender === "seller" // meddelanden från motparten
+    (msg) => msg.sender === "seller"
   );
 
   for (const msg of unreadMessages) {
-    await fetch(`http://localhost:1337/api/messages/${msg.id}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ data: { read: true } }),
-    });
+    try {
+      await fetch(`http://localhost:1337/api/messages/${msg.documentId}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data: { read: true } }),
+      });
+    } catch (err) {
+      console.error("Kunde inte markera meddelande som läst:", err);
+    }
   }
 };
 
@@ -178,10 +183,11 @@ const payload = {
 
       const newLocalMessage = {
         id: savedMsgResponse.data.id,
+        documentId: savedMsgResponse.data.documentId, // <-- lägg till
         sender: "buyer",
         text: typedMessage,
         time: new Date().toLocaleTimeString("sv-SE", { hour: "2-digit", minute: "2-digit" }),
-      };
+        };
 
       const updatedConversations = conversations.map((c) => {
         if (c.id === activeConversation.id) {

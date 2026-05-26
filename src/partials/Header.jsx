@@ -77,10 +77,12 @@ export default function Header() {
             <NavLink to="/createlisting">Ny annons</NavLink>
             
             
-            <NavLink to="/chatpage" className="chatLink">
-              Meddelande 
-              {unreadMessages > 0 && <span className="unreadBadge">{unreadMessages}</span>}
-            </NavLink>
+          <NavLink to="/chatpage" className="chatLink">
+            Meddelande
+            {unreadMessages > 0 && (
+              <span className="unreadBadge">{unreadMessages}</span>
+            )}
+          </NavLink>
 
             {/* Om inloggad, visa användarnamn plus logga ut */}
             {isLoggedIn ? (
