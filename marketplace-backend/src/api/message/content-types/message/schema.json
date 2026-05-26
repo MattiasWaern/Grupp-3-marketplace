@@ -24,9 +24,8 @@
     },
     "sender": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "messages"
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }

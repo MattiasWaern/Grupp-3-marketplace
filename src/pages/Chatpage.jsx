@@ -97,6 +97,7 @@ const groupMessagesIntoConversations = (messages, currentUserId) => {
 };
 
 
+
 useEffect(() => {
   const incomingSeller = location.state?.sellerName;
   const incomingTitle = location.state?.listingTitle;
@@ -124,6 +125,23 @@ useEffect(() => {
   }
 }, [location.state, conversations]);
 
+
+const markMessagesAsRead = async (conversation) => {
+  const unreadMessages = conversation.messages.filter(
+    (msg) => msg.sender === "seller" // meddelanden från motparten
+  );
+
+  for (const msg of unreadMessages) {
+    await fetch(`http://localhost:1337/api/messages/${msg.id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ data: { read: true } }),
+    });
+  }
+};
 
 const handleSend = async (e) => {
   e.preventDefault();
@@ -206,7 +224,10 @@ const payload = {
               <div
                 key={conv.id}
                 className={`conversation-item ${activeConversation?.id === conv.id ? "active" : ""}`}
-                onClick={() => setActiveConversation(conv)}
+                onClick={() => {
+                    setActiveConversation(conv);
+                    markMessagesAsRead(conv);
+                    }}
               >
                 <div className="conv-avatar">
                   {conv.listingImage ? (

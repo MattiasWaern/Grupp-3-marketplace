@@ -50,8 +50,7 @@ function Listings() {
   const fetchListings = async () => {
     setLoading(true);
     try {
-      let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user&sort=${sortBy}`;
-
+let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user&sort=${sortBy}`;
       if (selectedCategory) {
         url += `&filters[category][$eq]=${selectedCategory}`;
       }
