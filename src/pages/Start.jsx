@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import HeroImage from "../parts/HeroImage";
-import "../CSS/Listings.css";
+import "../CSS/start.css";
 
 
 export default function Start() {
