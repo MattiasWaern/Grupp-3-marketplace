@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Listings.css";
 import { fetchHerrListings } from "../utils/listings";
+import ReviewForm from "./ReviewForm";
+import ReviewList from "./ReviewList";
 
 function Herr() {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedListing, setSelectedListing] = useState(null);
+
+  const [refreshReviews, setRefreshReviews] = useState(0);
 
   const navigate = useNavigate();
 
@@ -21,7 +25,7 @@ function Herr() {
 
       const data = await fetchHerrListings();
 
-      console.log("HERR DATA:", data);
+      console.log("Herr DATA:", data);
 
       setListings(data || []);
       setError("");
@@ -51,7 +55,6 @@ function Herr() {
     return <p>{error}</p>;
   }
 
-  // DETALJVY
   if (selectedListing) {
     const attrs = selectedListing.attributes || selectedListing;
     const imageUrl = getImageUrl(attrs.image);
@@ -129,13 +132,26 @@ function Herr() {
             >
               Starta chatt med säljaren
             </button>
+
+            <div className="reviews-section">
+              <ReviewForm
+                listingId={selectedListing.id}
+                onReviewAdded={() =>
+                  setRefreshReviews((prev) => prev + 1)
+                }
+              />
+
+              <ReviewList
+                listingId={selectedListing.id}
+                refresh={refreshReviews}
+              />
+            </div>
           </div>
         </div>
       </div>
     );
   }
 
-  // LISTA
   return (
     <div className="listings-container">
       <h1>Herr</h1>
@@ -146,7 +162,6 @@ function Herr() {
         <div className="listings-grid">
           {listings.map((item) => {
             const attrs = item.attributes || item;
-
             const imageUrl = getImageUrl(attrs.image);
 
             return (
@@ -165,15 +180,15 @@ function Herr() {
                   </div>
                 )}
 
-                <h2>{attrs?.title || "Ingen titel"}</h2>
+                <h2>{attrs.title || "Ingen titel"}</h2>
 
                 <p>
-                  {attrs?.price
+                  {attrs.price
                     ? `${Number(attrs.price).toLocaleString()} kr`
                     : "Pris saknas"}
                 </p>
 
-                <p>{attrs?.location || "Ingen plats"}</p>
+                <p>{attrs.location || "Ingen plats"}</p>
               </div>
             );
           })}
@@ -185,7 +200,7 @@ function Herr() {
 
 Herr.route = {
   path: "/herr",
-  index: 9,
+  index: 13,
 };
 
 export default Herr;

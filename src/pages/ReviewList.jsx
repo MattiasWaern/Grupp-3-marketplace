@@ -1,24 +1,18 @@
 import { useEffect, useState } from "react";
+import { fetchReviewsByListing } from "../utils/reviews";
+import "../CSS/reviews.css";
 
-export default function ReviewList({ listingId }) {
+export default function ReviewList({ listingId, refresh }) {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const res = await fetch(
-          `http://localhost:1337/api/reviews?populate=user&filters[listing][id][$eq]=${listingId}`
-        );
-
-        const data = await res.json();
-        setReviews(data.data || []);
-      } catch (error) {
-        console.error("Kunde inte hämta reviews:", error);
-      }
+    const load = async () => {
+      const data = await fetchReviewsByListing(listingId);
+      setReviews(data);
     };
 
-    fetchReviews();
-  }, [listingId]);
+    if (listingId) load();
+  }, [listingId, refresh]);
 
   return (
     <div>
@@ -27,12 +21,10 @@ export default function ReviewList({ listingId }) {
       {reviews.length === 0 && <p>Inga recensioner ännu</p>}
 
       {reviews.map((r) => {
-        const attrs = r.attributes;
-
         return (
           <div key={r.id}>
-            <p>{attrs.rating} ⭐</p>
-            <p>{attrs.comment}</p>
+            <p>{r.rating} ⭐</p>
+            <p>{r.review}</p>
           </div>
         );
       })}

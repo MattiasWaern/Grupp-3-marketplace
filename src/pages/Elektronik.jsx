@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Listings.css";
 import { fetchElektronikListings } from "../utils/listings";
+import ReviewForm from "./ReviewForm";
+import ReviewList from "./ReviewList";
 
 function Elektronik() {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedListing, setSelectedListing] = useState(null);
+
+  const [refreshReviews, setRefreshReviews] = useState(0);
 
   const navigate = useNavigate();
 
@@ -51,7 +55,6 @@ function Elektronik() {
     return <p>{error}</p>;
   }
 
-  // DETALJVY
   if (selectedListing) {
     const attrs = selectedListing.attributes || selectedListing;
     const imageUrl = getImageUrl(attrs.image);
@@ -129,13 +132,26 @@ function Elektronik() {
             >
               Starta chatt med säljaren
             </button>
+
+            <div className="reviews-section">
+              <ReviewForm
+                listingId={selectedListing.id}
+                onReviewAdded={() =>
+                  setRefreshReviews((prev) => prev + 1)
+                }
+              />
+
+              <ReviewList
+                listingId={selectedListing.id}
+                refresh={refreshReviews}
+              />
+            </div>
           </div>
         </div>
       </div>
     );
   }
 
-  // LISTA
   return (
     <div className="listings-container">
       <h1>Elektronik</h1>
@@ -146,7 +162,6 @@ function Elektronik() {
         <div className="listings-grid">
           {listings.map((item) => {
             const attrs = item.attributes || item;
-
             const imageUrl = getImageUrl(attrs.image);
 
             return (
@@ -165,15 +180,15 @@ function Elektronik() {
                   </div>
                 )}
 
-                <h2>{attrs?.title || "Ingen titel"}</h2>
+                <h2>{attrs.title || "Ingen titel"}</h2>
 
                 <p>
-                  {attrs?.price
+                  {attrs.price
                     ? `${Number(attrs.price).toLocaleString()} kr`
                     : "Pris saknas"}
                 </p>
 
-                <p>{attrs?.location || "Ingen plats"}</p>
+                <p>{attrs.location || "Ingen plats"}</p>
               </div>
             );
           })}
@@ -184,8 +199,8 @@ function Elektronik() {
 }
 
 Elektronik.route = {
-  path: "/Elektronik",
-  index: 9,
+  path: "/elektronik",
+  index: 11,
 };
 
 export default Elektronik;

@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Listings.css";
 import { fetchBarnListings } from "../utils/listings";
+import ReviewForm from "./ReviewForm";
+import ReviewList from "./ReviewList";
 
 function Barn() {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedListing, setSelectedListing] = useState(null);
+
+  // 🔥 STEG 3 - refresh state för reviews
+  const [refreshReviews, setRefreshReviews] = useState(0);
 
   const navigate = useNavigate();
 
@@ -129,6 +134,21 @@ function Barn() {
             >
               Starta chatt med säljaren
             </button>
+
+            {/* 🔥 REVIEWS SECTION (FIXAD) */}
+            <div className="reviews-section">
+              <ReviewForm
+                listingId={selectedListing.id}
+                onReviewAdded={() =>
+                  setRefreshReviews((prev) => prev + 1)
+                }
+              />
+
+              <ReviewList
+                listingId={selectedListing.id}
+                refresh={refreshReviews}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -146,7 +166,6 @@ function Barn() {
         <div className="listings-grid">
           {listings.map((item) => {
             const attrs = item.attributes || item;
-
             const imageUrl = getImageUrl(attrs.image);
 
             return (
@@ -165,15 +184,15 @@ function Barn() {
                   </div>
                 )}
 
-                <h2>{attrs?.title || "Ingen titel"}</h2>
+                <h2>{attrs.title || "Ingen titel"}</h2>
 
                 <p>
-                  {attrs?.price
+                  {attrs.price
                     ? `${Number(attrs.price).toLocaleString()} kr`
                     : "Pris saknas"}
                 </p>
 
-                <p>{attrs?.location || "Ingen plats"}</p>
+                <p>{attrs.location || "Ingen plats"}</p>
               </div>
             );
           })}
@@ -184,7 +203,7 @@ function Barn() {
 }
 
 Barn.route = {
-  path: "/Barn",
+  path: "/barn",
   index: 9,
 };
 
