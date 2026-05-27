@@ -59,7 +59,6 @@ export default function Start() {
 
   return (
     <div className="home-page-container">
-      {/* Hero-sektionen */}
       <div className="hero-wrapper">
         <HeroImage src="./images/HomePageImg.png" alt="Clothes on a rack" />
         <div className="hero-overlay">
@@ -73,8 +72,7 @@ export default function Start() {
           <p>Sälj nu och ge dina saker ett nytt liv</p>
         </div>
       </div>
-
-      {/* Sektionen för senaste annonser */}
+      
       <section className="listings-container">
         <h2 className="listings-title">Senast upplagda annonser</h2>
 
