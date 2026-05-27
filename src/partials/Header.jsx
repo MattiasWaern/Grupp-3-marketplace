@@ -75,27 +75,25 @@ export default function Header() {
             </NavLink>
 
             {/* Om inloggad, visa användarnamn plus logga ut */}
-            {isLoggedIn ? (
-              <>
-                
+          {isLoggedIn ? (
+  <>
+    <NavLink to="/profile">
+      Min profil
+    </NavLink>
 
-                <button onClick={handleLogout} className="logoutBtn">
-                  Logga ut
-                </button>
-                <NavLink to="/profile">
-                  Min profil
-                </NavLink>
-              </>
-            ) : (
-              /* Om INTE inloggad, visa Logga in plus Skapa konto */
-              <>
-                <NavLink to="/login">Logga in</NavLink>
+    <button onClick={handleLogout} className="logoutBtn">
+      Logga ut
+    </button>
+  </>
+) : (
+  <>
+    <NavLink to="/login">Logga in</NavLink>
 
-                <NavLink to="/signup" className="signUp">
-                  Skapa konto
-                </NavLink>
-              </>
-            )}
+    <NavLink to="/signup" className="signUp">
+      Skapa konto
+    </NavLink>
+  </>
+)}
           </nav>
         </div>
 
