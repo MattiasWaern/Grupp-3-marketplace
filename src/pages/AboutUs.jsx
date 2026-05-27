@@ -6,7 +6,7 @@ export default function AboutUs() {
   
     <p>
       Välkommen till The Selling Point - en marknadsplats där köp och sälj
-      blir enket, trygt och tillgängligt för alla.
+      blir enkelt, tryggt och tillgängligt för alla.
     </p>
 
     <p>
@@ -16,11 +16,11 @@ export default function AboutUs() {
    </p>
 
     <p>
-      Vi tror på att ge produkter ett  andra liv samtidigt som vi gör
+      Vi tror på att ge produkter ett andra liv samtidigt som vi gör
       onlineshopping mer personlig och hållbar.
     </p>
 
-    <h2>Vad vi erbjuder</h2>
+    <h2>Vad vi erbjuder:</h2>
 
     <ul>
       <li>Enkel skapning av annonser</li>
@@ -29,10 +29,10 @@ export default function AboutUs() {
       <li>En smidig och modern shoppingupplevelse</li>
     </ul>
 
-  <h2>Vår vision</h2>
+  <h2>Vår vision:</h2>
 
     <p>
-      Vi vill att The Selling Point ska bli en trygg plattform där määnniskor
+      Vi vill att The Selling Point ska bli en trygg plattform där människor
       kan köpa och sälja med förtroende samtidigt som vi bidrar till mer
       hållbar konsumtion.
     </p>

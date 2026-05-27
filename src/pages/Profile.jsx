@@ -9,12 +9,10 @@ export default function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Hämta den inloggade användaren från localStorage
     const storedUser = localStorage.getItem("user");
     const token = localStorage.getItem("token");
 
     if (!storedUser || !token) {
-      // Om man inte är inloggad skickas man till loginsidan
       navigate("/login");
       return;
     }
@@ -22,7 +20,6 @@ export default function Profile() {
     const currentUser = JSON.parse(storedUser);
     setUser(currentUser);
 
-    // Hämta ALLA annonser och filtrera ut användarens egna
    const fetchMyListings = async () => {
     try {
       const response = await fetch(
@@ -51,7 +48,6 @@ export default function Profile() {
 
   return (
     <div className="profile-container">
-      {/* Användarinfo */}
       <section className="user-info-section">
         <h2>Min Profil</h2>
         {user && (
@@ -68,7 +64,6 @@ export default function Profile() {
 
       <hr />
 
-      {/* Användarens egna annonser */}
       <section className="my-listings-section">
         <h3>Mina utlagda annonser ({myListings.length})</h3>
 

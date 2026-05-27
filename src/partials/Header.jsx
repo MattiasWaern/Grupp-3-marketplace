@@ -8,7 +8,6 @@ export default function Header() {
   const [unreadMessages, setUnreadMessages] = useState(0);
   const navigate = useNavigate();
 
-  // Kör useEffect när headern laddas och kollar om det finns en sparad användare
   useEffect(() => {
     const token = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
@@ -16,9 +15,8 @@ export default function Header() {
     if (token && storedUser) {
       setIsLoggedIn(true);
       const userObj = JSON.parse(storedUser);
-      setUsername(userObj.username); // Hämtar namnet
+      setUsername(userObj.username);
 
-      // HÄMTA OLÄSTA MEDDELANDEN FRÅN  CUSTOM ENDPOINT
       fetch("http://localhost:1337/api/messages/unread-count", {
         method: "GET",
         headers: {
@@ -42,7 +40,6 @@ export default function Header() {
     }
   }, []);
 
-  // Funktion för att logga ut
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -52,7 +49,6 @@ export default function Header() {
     setUsername("");
     setUnreadMessages(0);
 
-    // Skicka användaren till startsidan efter utloggning
     navigate("/");
   };
 
@@ -74,28 +70,25 @@ export default function Header() {
               )}
             </NavLink>
 
-            {/* Om inloggad, visa användarnamn plus logga ut */}
-            {isLoggedIn ? (
-              <>
-                
+          {isLoggedIn ? (
+  <>
+    <NavLink to="/profile">
+      Min profil
+    </NavLink>
 
-                <button onClick={handleLogout} className="logoutBtn">
-                  Logga ut
-                </button>
-                <NavLink to="/profile">
-                  Min profil
-                </NavLink>
-              </>
-            ) : (
-              /* Om INTE inloggad, visa Logga in plus Skapa konto */
-              <>
-                <NavLink to="/login">Logga in</NavLink>
+    <button onClick={handleLogout} className="logoutBtn">
+      Logga ut
+    </button>
+  </>
+) : (
+  <>
+    <NavLink to="/login">Logga in</NavLink>
 
-                <NavLink to="/signup" className="signUp">
-                  Skapa konto
-                </NavLink>
-              </>
-            )}
+    <NavLink to="/signup" className="signUp">
+      Skapa konto
+    </NavLink>
+  </>
+)}
           </nav>
         </div>
 
