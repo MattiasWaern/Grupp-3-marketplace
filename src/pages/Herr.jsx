@@ -21,7 +21,7 @@ function Herr() {
 
       const data = await fetchHerrListings();
 
-      console.log("HERR DATA:", data);
+      console.log("Herr DATA:", data);
 
       setListings(data || []);
       setError("");
@@ -41,6 +41,18 @@ function Herr() {
     }
 
     return null;
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "Inget datum";
+
+    const date = new Date(dateString);
+
+    return date.toLocaleDateString("sv-SE", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   };
 
   if (loading) {
@@ -138,7 +150,7 @@ function Herr() {
   // LISTA
   return (
     <div className="listings-container">
-      <h1>Herr</h1>
+      <h1 className="listings-title">Herr</h1>
 
       {listings.length === 0 ? (
         <p>Inga Herr annonser ännu</p>
@@ -167,13 +179,21 @@ function Herr() {
 
                 <h2>{attrs?.title || "Ingen titel"}</h2>
 
-                <p>
-                  {attrs?.price
-                    ? `${Number(attrs.price).toLocaleString()} kr`
-                    : "Pris saknas"}
-                </p>
+                <div className="listing-details">
+                  <p className="listing-price">
+                    {attrs?.price
+                      ? `${Number(attrs.price).toLocaleString()} kr`
+                      : "Pris saknas"}
+                  </p>
 
-                <p>{attrs?.location || "Ingen plats"}</p>
+                  <p className="listing-location">
+                    {attrs?.location || "Ingen plats"}
+                  </p>
+                </div>
+
+                <p className="listing-date">
+                  {formatDate(attrs.publishedAt || attrs.createdAt)}
+                </p>
               </div>
             );
           })}
@@ -184,7 +204,7 @@ function Herr() {
 }
 
 Herr.route = {
-  path: "/herr",
+  path: "/Herr",
   index: 9,
 };
 

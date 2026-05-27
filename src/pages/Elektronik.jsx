@@ -43,6 +43,18 @@ function Elektronik() {
     return null;
   };
 
+  const formatDate = (dateString) => {
+    if (!dateString) return "Inget datum";
+
+    const date = new Date(dateString);
+
+    return date.toLocaleDateString("sv-SE", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   if (loading) {
     return <p>Laddar Elektronik annonser...</p>;
   }
@@ -138,7 +150,7 @@ function Elektronik() {
   // LISTA
   return (
     <div className="listings-container">
-      <h1>Elektronik</h1>
+      <h1 className="listings-title">Elektronik</h1>
 
       {listings.length === 0 ? (
         <p>Inga Elektronik annonser ännu</p>
@@ -167,13 +179,21 @@ function Elektronik() {
 
                 <h2>{attrs?.title || "Ingen titel"}</h2>
 
-                <p>
-                  {attrs?.price
-                    ? `${Number(attrs.price).toLocaleString()} kr`
-                    : "Pris saknas"}
-                </p>
+                <div className="listing-details">
+                  <p className="listing-price">
+                    {attrs?.price
+                      ? `${Number(attrs.price).toLocaleString()} kr`
+                      : "Pris saknas"}
+                  </p>
 
-                <p>{attrs?.location || "Ingen plats"}</p>
+                  <p className="listing-location">
+                    {attrs?.location || "Ingen plats"}
+                  </p>
+                </div>
+
+                <p className="listing-date">
+                  {formatDate(attrs.publishedAt || attrs.createdAt)}
+                </p>
               </div>
             );
           })}
