@@ -63,7 +63,6 @@ function Hem() {
     return <p>{error}</p>;
   }
 
-  // DETALJVY
   if (selectedListing) {
     const attrs = selectedListing.attributes || selectedListing;
     const imageUrl = getImageUrl(attrs.image);
@@ -147,7 +146,6 @@ function Hem() {
     );
   }
 
-  // LISTA
   return (
     <div className="listings-container">
       <h1 className="listings-title">Hem</h1>
