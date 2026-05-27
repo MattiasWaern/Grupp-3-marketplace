@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Listings.css";
 import { fetchDamListings } from "../utils/listings";
+import ReviewForm from "./ReviewForm";
+import ReviewList from "./ReviewList";
 
 function Dam() {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedListing, setSelectedListing] = useState(null);
+
+  // används för att uppdatera reviews direkt efter ny recension
+  const [refreshReviews, setRefreshReviews] = useState(0);
 
   const navigate = useNavigate();
 
@@ -41,18 +46,6 @@ function Dam() {
     }
 
     return null;
-  };
-
-  const formatDate = (dateString) => {
-    if (!dateString) return "Inget datum";
-
-    const date = new Date(dateString);
-
-    return date.toLocaleDateString("sv-SE", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
   };
 
   if (loading) {
@@ -141,6 +134,21 @@ function Dam() {
             >
               Starta chatt med säljaren
             </button>
+
+            {/* REVIEWS */}
+            <div className="reviews-section">
+              <ReviewForm
+                listingId={selectedListing.id}
+                onReviewAdded={() =>
+                  setRefreshReviews((prev) => prev + 1)
+                }
+              />
+
+              <ReviewList
+                listingId={selectedListing.id}
+                refresh={refreshReviews}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -150,7 +158,7 @@ function Dam() {
   // LISTA
   return (
     <div className="listings-container">
-      <h1 className="listings-title">Dam</h1>
+      <h1>Dam</h1>
 
       {listings.length === 0 ? (
         <p>Inga Dam annonser ännu</p>
@@ -158,7 +166,6 @@ function Dam() {
         <div className="listings-grid">
           {listings.map((item) => {
             const attrs = item.attributes || item;
-
             const imageUrl = getImageUrl(attrs.image);
 
             return (
@@ -177,23 +184,15 @@ function Dam() {
                   </div>
                 )}
 
-                <h2>{attrs?.title || "Ingen titel"}</h2>
+                <h2>{attrs.title || "Ingen titel"}</h2>
 
-                <div className="listing-details">
-                  <p className="listing-price">
-                    {attrs?.price
-                      ? `${Number(attrs.price).toLocaleString()} kr`
-                      : "Pris saknas"}
-                  </p>
-
-                  <p className="listing-location">
-                    {attrs?.location || "Ingen plats"}
-                  </p>
-                </div>
-
-                <p className="listing-date">
-                  {formatDate(attrs.publishedAt || attrs.createdAt)}
+                <p>
+                  {attrs.price
+                    ? `${Number(attrs.price).toLocaleString()} kr`
+                    : "Pris saknas"}
                 </p>
+
+                <p>{attrs.location || "Ingen plats"}</p>
               </div>
             );
           })}
@@ -204,8 +203,8 @@ function Dam() {
 }
 
 Dam.route = {
-  path: "/Dam",
-  index: 9,
+  path: "/dam",
+  index: 10,
 };
 
 export default Dam;

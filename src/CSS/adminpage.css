@@ -38,7 +38,6 @@
     border-bottom: none;
 }
 
-/* Grönt för aktiva användare, rött för avstängda */
 .status-active {
     color: green;
     font-weight: 600;
@@ -49,7 +48,6 @@
     font-weight: 600;
 }
 
-/* Knapp för att stänga av */
 .btn-block {
     background-color: #e74c3c;
     color: white;
@@ -59,7 +57,6 @@
     cursor: pointer;
 }
 
-/* Knapp för att aktivera */
 .btn-activate {
     background-color: #2ecc71;
     color: white;

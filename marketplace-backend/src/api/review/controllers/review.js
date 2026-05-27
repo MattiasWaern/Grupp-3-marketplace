@@ -19,8 +19,11 @@ module.exports = createCoreController('api::review.review', ({ strapi }) => ({
         "api::review.review", 
         {
           filters: {
-            listing: listingId,
+            listing: {
+              id: listingId,
+            },
           },
+          populate: ["listing", "users_permissions_user"],
         }
       );
       ctx.body = reviews;

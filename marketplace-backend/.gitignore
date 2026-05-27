@@ -65,7 +65,7 @@ $RECYCLE.BIN/
 # Logs and databases
 ############################
 
-.tmp
+
 *.log
 *.sql
 *.sqlite
@@ -132,7 +132,7 @@ build
 my-strapi-project/.tmp/
 *.db
 
-**/.tmp/
+
 **/dist/
 **/build/
 **/.cache/
