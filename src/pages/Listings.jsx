@@ -5,7 +5,6 @@ import Chat from "../pages/Chatpage";
 import ReviewForm from "../pages/ReviewForm";
 import ReviewList from "../pages/ReviewList";
 
-// Hämtar alla annonser från backend och visar dom
 function Listings() {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);

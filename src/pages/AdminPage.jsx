@@ -5,7 +5,6 @@ function AdminPage() {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState("");
 
-    // hämtar alla användare vid start
     useEffect(() => {
         fetchUsers();
     }, []);

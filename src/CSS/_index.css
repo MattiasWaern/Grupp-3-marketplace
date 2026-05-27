@@ -6,4 +6,8 @@
 @import './heroImg.css';
 
 @import './optionBoxes.css';
-@import './aboutUs.css'
+@import './aboutUs.css';
+
+* {
+    font-family: 'Inter', sans-serif;
+}

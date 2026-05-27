@@ -54,7 +54,6 @@ useEffect(() => {
     });
 }, [token, navigate]);
 
-  // Hjälpfunktion för att gruppera meddelanden per användare (Säljare/Köpare)
 const groupMessagesIntoConversations = (messages, currentUserId) => {
   const chatMap = {};
 
@@ -85,7 +84,7 @@ const groupMessagesIntoConversations = (messages, currentUserId) => {
 
         chatMap[key].messages.push({
         id: msg.id,
-        documentId: msg.documentId, // <-- lägg till denna
+        documentId: msg.documentId,
         sender: isISender ? "buyer" : "seller",
         text: text,
         time: new Date(msg.createdAt).toLocaleTimeString("sv-SE", { hour: "2-digit", minute: "2-digit" }),
@@ -111,7 +110,7 @@ useEffect(() => {
       setActiveConversation(existing);
     } else {
       const newConv = {
-        id: incomingSellerId,  // <-- använd riktigt documentId, inte "temp-..."
+        id: incomingSellerId,
         sellerName: incomingSeller,
         listingTitle: incomingTitle,
         listingImage: incomingImage,
@@ -183,7 +182,7 @@ const payload = {
 
       const newLocalMessage = {
         id: savedMsgResponse.data.id,
-        documentId: savedMsgResponse.data.documentId, // <-- lägg till
+        documentId: savedMsgResponse.data.documentId,
         sender: "buyer",
         text: typedMessage,
         time: new Date().toLocaleTimeString("sv-SE", { hour: "2-digit", minute: "2-digit" }),
