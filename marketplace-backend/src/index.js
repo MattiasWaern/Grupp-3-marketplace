@@ -12,6 +12,8 @@ const PERMISSIONS = {
   authenticated: {
     "api::listing.listing": ["create", "delete", "find", "findOne", "update"],
     "api::message.message": ["create", "find", "findOne", "unreadCount", "update"],
+    "api::review.review": ["create", "find", "findOne"],
+
   },
   authenticatedPlugins: {
     "plugin::upload.content-api": ["find", "findOne", "upload"],

@@ -11,7 +11,6 @@ function Dam() {
   const [error, setError] = useState("");
   const [selectedListing, setSelectedListing] = useState(null);
 
-  // används för att uppdatera reviews direkt efter ny recension
   const [refreshReviews, setRefreshReviews] = useState(0);
 
   const navigate = useNavigate();

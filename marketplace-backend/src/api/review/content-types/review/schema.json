@@ -28,6 +28,11 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "reviews"
+    },
+    "rating": {
+      "type": "integer",
+      "min": 1,
+      "max": 5
     }
   }
 }
