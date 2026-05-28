@@ -9,8 +9,6 @@ export default function ReviewForm({ listingId, onReviewAdded }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("LISTING ID:", listingId);
-
     const token = localStorage.getItem("token");
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -21,7 +19,7 @@ export default function ReviewForm({ listingId, onReviewAdded }) {
 
     try {
       setLoading(true);
-
+      console.log("TOKEN", token);
       const response = await fetch(
         "http://localhost:1337/api/reviews",
         {
@@ -34,10 +32,9 @@ export default function ReviewForm({ listingId, onReviewAdded }) {
             data: {
               title: "Review",
               review: comment,
-              listing: {
-                id: listingId,
-              }
-              //user: user.id,
+              rating: rating,
+              listing: listingId,
+              users_permissions_user: user.id
 
             },
           }),

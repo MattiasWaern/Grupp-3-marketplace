@@ -11,7 +11,6 @@ function Barn() {
   const [error, setError] = useState("");
   const [selectedListing, setSelectedListing] = useState(null);
 
-  // 🔥 STEG 3 - refresh state för reviews
   const [refreshReviews, setRefreshReviews] = useState(0);
 
   const navigate = useNavigate();
@@ -56,7 +55,6 @@ function Barn() {
     return <p>{error}</p>;
   }
 
-  // DETALJVY
   if (selectedListing) {
     const attrs = selectedListing.attributes || selectedListing;
     const imageUrl = getImageUrl(attrs.image);
@@ -135,7 +133,6 @@ function Barn() {
               Starta chatt med säljaren
             </button>
 
-            {/* 🔥 REVIEWS SECTION (FIXAD) */}
             <div className="reviews-section">
               <ReviewForm
                 listingId={selectedListing.id}
@@ -155,7 +152,6 @@ function Barn() {
     );
   }
 
-  // LISTA
   return (
     <div className="listings-container">
       <h1>Barn</h1>
