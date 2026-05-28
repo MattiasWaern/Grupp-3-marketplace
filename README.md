@@ -73,7 +73,7 @@ npm run develop
 
 | Fält | Värde |
 |------|--------|
-| E-post | `grupp3@gmail.com` |
+| E-post | `robin1995karlsson@hotmail.com` |
 | Lösenord | `Viärgrupp3!` |
 
 ---
