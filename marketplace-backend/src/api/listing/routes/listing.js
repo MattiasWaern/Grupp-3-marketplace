@@ -1,9 +1,12 @@
-'use strict';
-
-/**
- * listing router
- */
-
-const { createCoreRouter } = require('@strapi/strapi').factories;
-
-module.exports = createCoreRouter('api::listing.listing');
+module.exports = {
+  routes: [
+    {
+      method: 'GET',
+      path: '/listings/latest',
+      handler: 'listing.getLatest',
+      config: {
+        auth: false,
+      },
+    },
+  ],
+};

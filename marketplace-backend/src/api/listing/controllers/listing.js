@@ -1,11 +1,22 @@
-'use strict';
+/* global strapi */
+// @ts-nocheck
+"use strict";
 
-/**
- * listing controller
- */
+module.exports = {
+  async getLatest(ctx) {
+    try {
+      const listings = await strapi.entityService.findMany(
+        "api::listing.listing",
+        {
+          populate: ["image", "user"],
+          orderBy: { publishedAt: "desc" },
+          limit: 4,
+        },
+      );
 
-const { createCoreController } = require('@strapi/strapi').factories;
-
-module.exports = createCoreController('api::listing.listing');
-
-
+      ctx.body = { data: listings };
+    } catch (err) {
+      ctx.throw(500, err);
+    }
+  },
+};
