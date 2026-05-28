@@ -16,6 +16,7 @@ function Listings() {
 
   const [selectedListing, setSelectedListing] = useState(null);
   const [refreshReviews, setRefreshReviews] = useState(0);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const navigate = useNavigate();
 
@@ -76,6 +77,32 @@ let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user
     } finally {
       setLoading(false);
     }
+  };
+
+  useEffect(() => {
+  const fetchCurrentUser = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const response = await fetch("http://localhost:1337/api/users/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (response.ok) {
+        const user = await response.json();
+        setCurrentUser(user);
+      }
+    } catch (err) {
+      console.error("Kunde inte hämta användare", err);
+    }
+  };
+
+  fetchCurrentUser();
+}, []);
+
+  const isOwner = (listing) => {
+    const attrs = listing.attributes || listing;
+    return currentUser && attrs.user?.id === currentUser.id;
   };
 
   const formatDate = (dateString) => {
@@ -184,46 +211,51 @@ let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user
                 {attrs.description || "Ingen beskrivning angiven av säljaren."}
               </p>
             </div>
-
-            <button
-              className="contact-seller-btn"
-              onClick={() =>
-                navigate("/chatpage", {
-                  state: {
-                    sellerName,
-                    listingTitle: attrs.title,
-                    listingImage: imageUrl,
-                    sellerId: attrs.user?.documentId, 
-                  },
-                })
-              }
-            >
-              Starta chatt med säljaren
-            </button>
-
-            <button
-              className="contact-seller-btn"
-              onClick={() =>
-                navigate("/editlisting", {
-                  state: {
-                    listing: {
-                      id: selectedListing.id,
-                      ...attrs,
+            {!isOwner(selectedListing) && (
+              <button
+                className="contact-seller-btn"
+                onClick={() =>
+                  navigate("/chatpage", {
+                    state: {
+                      sellerName,
+                      listingTitle: attrs.title,
+                      listingImage: imageUrl,
+                      sellerId: attrs.user?.documentId,
                     },
-                  },
-                })
-              }
-            >
-              Redigera annons
-            </button>
+                  })
+                }
+              >
+                Starta chatt med säljaren
+              </button>
+            )}
 
-            <button
-              className="contact-seller-btn"
-              style={{ backgroundColor: "red" }}
-              onClick={() => handleDelete(selectedListing.id)}
-            >
-              Ta bort annons
-            </button>
+           {isOwner(selectedListing) && (
+            <>
+              <button
+                className="contact-seller-btn"
+                onClick={() =>
+                  navigate("/editlisting", {
+                    state: {
+                      listing: {
+                        id: selectedListing.id,
+                        ...attrs,
+                      },
+                    },
+                  })
+                }
+              >
+                Redigera annons
+              </button>
+
+              <button
+                className="contact-seller-btn"
+                style={{ backgroundColor: "red" }}
+                onClick={() => handleDelete(selectedListing.id)}
+              >
+                Ta bort annons
+              </button>
+            </>
+          )}
             <div className="review-section">
               <ReviewForm listingId={selectedListing.id}
                 onReviewAdded={() => setRefreshReviews(prev => prev + 1)
