@@ -15,7 +15,7 @@
 -  Köpa produkter
 -  Sälja produkter
 -  Kontakta säljare
--  Lägga upp egna annonser
+-  Lägga upp egna annonser samt redigiera och ta bort sina annonser
 -  Logga in som admin
 
 Projektet är utvecklat som ett skolprojekt inom kursen **Javascript 3** på KYH.
@@ -69,7 +69,7 @@ npm run develop
 - API: `http://localhost:1337`
 - Admin-panel: `http://localhost:1337/admin`
 
-###  Admininloggning
+###  Admininloggning på strapi VI FÅR ÄNDRA DETTA TILL DET SOM FUNKAR
 
 | Fält | Värde |
 |------|--------|
