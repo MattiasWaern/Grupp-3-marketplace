@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../CSS/reviews.css";
 
 export default function ReviewForm({ listingId, onReviewAdded }) {
   const [rating, setRating] = useState(5);
@@ -8,7 +9,9 @@ export default function ReviewForm({ listingId, onReviewAdded }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem("jwt");
+    console.log("LISTING ID:", listingId);
+
+    const token = localStorage.getItem("token");
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (!user || !token) {
@@ -29,14 +32,18 @@ export default function ReviewForm({ listingId, onReviewAdded }) {
           },
           body: JSON.stringify({
             data: {
-              rating,
-              comment,
-              listing: listingId,
-              user: user.id,
+              title: "Review",
+              review: comment,
+              listing: {
+                id: listingId,
+              }
+              //user: user.id,
+
             },
           }),
         }
       );
+    
 
       if (!response.ok) {
         const errorData = await response.json();

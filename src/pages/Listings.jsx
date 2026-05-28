@@ -15,6 +15,7 @@ function Listings() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const [selectedListing, setSelectedListing] = useState(null);
+  const [refreshReviews, setRefreshReviews] = useState(0);
 
   const navigate = useNavigate();
 
@@ -192,7 +193,7 @@ let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user
                     sellerName,
                     listingTitle: attrs.title,
                     listingImage: imageUrl,
-                    sellerId: attrs.user?.documentId, // <-- attrs istället för listing.user
+                    sellerId: attrs.user?.documentId, 
                   },
                 })
               }
@@ -223,6 +224,15 @@ let url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user
             >
               Ta bort annons
             </button>
+            <div className="review-section">
+              <ReviewForm listingId={selectedListing.id}
+                onReviewAdded={() => setRefreshReviews(prev => prev + 1)
+                
+              }/>
+              <ReviewList listingId={selectedListing.id}
+                refresh={refreshReviews}
+              />
+            </div>
           </div>
         </div>
       </div>
