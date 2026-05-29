@@ -3,7 +3,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import HeroImage from "../parts/HeroImage";
 import "../CSS/start.css";
 
-
 export default function Start() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -16,7 +15,7 @@ export default function Start() {
     const fetchLatestListings = async () => {
       setLoading(true);
       try {
-        const url = `http://localhost:1337/api/listings?populate[0]=image&populate[1]=user&sort=publishedAt:desc&pagination[limit]=4`;
+        const url = `http://localhost:1337/api/listings/latest`;
         const response = await fetch(url);
 
         if (!response.ok) {
@@ -72,7 +71,7 @@ export default function Start() {
           <p>Sälj nu och ge dina saker ett nytt liv</p>
         </div>
       </div>
-      
+
       <section className="listings-container">
         <h2 className="listings-title">Senast upplagda annonser</h2>
 
@@ -86,7 +85,6 @@ export default function Start() {
             {latestListings.map((listing) => {
               const attrs = listing.attributes || listing;
               const imageUrl = getImageUrl(attrs.image);
-
               return (
                 <div
                   className="card clickable"
