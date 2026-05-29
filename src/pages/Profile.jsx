@@ -23,8 +23,13 @@ export default function Profile() {
    const fetchMyListings = async () => {
     try {
       const response = await fetch(
-        `http://localhost:1337/api/listings?populate=*`
-      );
+          `http://localhost:1337/api/listings?filters[user][id][$eq]=${currentUser.id}&populate=*`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
       if (!response.ok) {
         throw new Error("Kunde inte hämta dina annonser.");

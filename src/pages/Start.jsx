@@ -85,7 +85,6 @@ export default function Start() {
             {latestListings.map((listing) => {
               const attrs = listing.attributes || listing;
               const imageUrl = getImageUrl(attrs.image);
-
               return (
                 <div
                   className="card clickable"

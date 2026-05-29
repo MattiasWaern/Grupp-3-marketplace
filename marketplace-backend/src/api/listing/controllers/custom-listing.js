@@ -9,7 +9,7 @@ module.exports = {
         "api::listing.listing",
         {
           populate: ["image", "user"],
-          orderBy: { publishedAt: "desc" },
+          sort: { createdAt: "desc" },
           limit: 4,
         },
       );
