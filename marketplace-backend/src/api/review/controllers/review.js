@@ -9,8 +9,6 @@ const { createCoreController } = require('@strapi/strapi').factories;
 module.exports = createCoreController('api::review.review', ({ strapi }) => ({
   async customReviews(ctx) {
 
-      console.log("🔥 ROUTE HIT");
-
   console.log("PARAMS:", ctx.params);
     try {
       const { listingId } = ctx.params;
