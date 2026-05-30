@@ -69,12 +69,19 @@ npm run develop
 - API: `http://localhost:1337`
 - Admin-panel: `http://localhost:1337/admin`
 
-###  Admininloggning
+###  Admininloggning Strapi
 
 | Fält | Värde |
 |------|--------|
 | E-post | `robin1995karlsson@hotmail.com` |
 | Lösenord | `Viärgrupp3!` |
+
+###  Admininloggning The selling point
+
+| Fält | Värde |
+|------|--------|
+| Användarnamn | `Admin` |
+| Lösenord | `123` |
 
 ---
 
